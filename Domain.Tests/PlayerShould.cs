@@ -3,11 +3,11 @@ using Xunit;
 
 namespace Domain.Tests
 {
-    public class PlayerTests
+    public class PlayerShould
     {
         [Fact]
         //Я, как игрок, могу войти в игру
-        public void PlayerCanJoinGame()
+        public void JoinGameIfNotJoined()
         {
             var testedPlayer = new Player();
             var customGame = new RollDiceGame();
@@ -19,7 +19,7 @@ namespace Domain.Tests
 
         [Fact]
         //Я, как игрок, могу выйти из игры
-        public void PlayerCanLeaveGame()
+        public void LeaveGameIfJoinedBefore()
         {
             var testedPlayer = new Player();
             var customGame = new RollDiceGame();
@@ -32,7 +32,7 @@ namespace Domain.Tests
 
         [Fact]
         //Я, как игрок, не могу выйти из игры, если я в нее не входил
-        public void CantLeaveGameIfNotJoin()
+        public void NotLeaveGameIfNotJoined()
         {
             var testedPlayer = new Player();
 
@@ -43,7 +43,7 @@ namespace Domain.Tests
 
         [Fact]
         //Я, как игрок, могу играть только в одну игру одновременно
-        public void PlayerCanJoinOnlyOneGame()
+        public void PlayOnlyOneGame()
         {
             var testedPlayer = new Player();
             var firstGame = new RollDiceGame();

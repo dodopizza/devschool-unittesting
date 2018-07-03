@@ -3,21 +3,18 @@ using Xunit;
 
 namespace Domain.Tests
 {
-    public class RollDiceGameTests
+    public class RollDiceGameShould
     {
         [Fact]
         //Я, как игра, не позволяю войти более чем 6 игрокам
-        public void GameCantAdd7Players()
+        public void AddOnlySixPlayers()
         {
             var customGame = new RollDiceGame();
-            Action addPlayer = () => customGame.AddPlayer(new Player());
-
             for (var i = 0; i < 6; i++)
-            {
-                addPlayer();
-            }
+                customGame.AddPlayer(new Player());
 
-            Assert.Throws<TooManyPlayersException>(addPlayer);
+            Action addPlayerAction = () => customGame.AddPlayer(new Player());
+            Assert.Throws<TooManyPlayersException>(addPlayerAction);
         }
     }
 }
