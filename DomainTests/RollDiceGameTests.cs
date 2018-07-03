@@ -8,7 +8,7 @@ namespace DomainTests
     {
         [Fact]
         [Description("Я, как игра, не позволяю войти более чем 6 игрокам")]
-        public void JoinGame_IfNotInGame()
+        public void ShouldThrowException_When7thPlayerJoin()
         {
             var game = new RollDiceGame();
 

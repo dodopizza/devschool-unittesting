@@ -6,11 +6,11 @@ using Xunit;
 
 namespace DomainTests
 {
-    public class UnitTest1
+    public class PlayerTests
     {
         [Fact]
         [Description("Я, как игрок, могу войти в игру")]
-        public void JoinGame_IfNotInGame()
+        public void ShouldBeInGame_WhenJoinGame()
         {
             var player = new Player();
             var game = new RollDiceGame();
@@ -22,7 +22,7 @@ namespace DomainTests
         
         [Fact]
         [Description("Я, как игрок не могу войти в игру 2 раза")]
-        public void JoinGame_IfInGame()
+        public void ShouldThrowException_WhenJoinGameSecondTime()
         {
             var player = new Player();
             var game = new RollDiceGame();
@@ -34,7 +34,7 @@ namespace DomainTests
         
         [Fact]
         [Description("Я, как игрок, могу играть только в одну игру одновременно")]
-        public void JoinGame_IfInAnotherGame()
+        public void ShouldThrowException_WhenJoinAnotherGame()
         {
             var player = new Player();
             var game = new RollDiceGame();
@@ -47,7 +47,7 @@ namespace DomainTests
         
         [Fact]
         [Description("Я, как игрок, не могу выйти из игры, если я в нее не входил")]
-        public void LeaveGame_IfNotInGame()
+        public void ShouldThrowException_WhenLeaveGameIfNotInGame()
         {
             var player = new Player();
             
@@ -56,7 +56,7 @@ namespace DomainTests
         
         [Fact]
         [Description("Я, как игрок, могу выйти из игры")]
-        public void LeaveGame_IfInGame()
+        public void ShouldLeaveGame_WhenInGame()
         {
             var player = new Player();
             var game = new RollDiceGame();
