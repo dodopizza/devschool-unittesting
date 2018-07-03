@@ -21,5 +21,18 @@ namespace Domain.Tests
 
             Assert.True(testedPlayer.IsInGame);
         }
+
+        [Fact]
+        //Я, как игрок, могу выйти из игры
+        public void PlayerCanLeaveGame()
+        {
+            var testedPlayer = new Player();
+            var customGame = new RollDiceGame();
+
+            testedPlayer.Join(customGame);
+            testedPlayer.LeaveGame();
+
+            Assert.False(testedPlayer.IsInGame);
+        }
     }
 }
