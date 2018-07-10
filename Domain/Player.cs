@@ -52,7 +52,7 @@ namespace Domain
             CurrentBet = null;
         }
 
-        public void Lose()
+        public virtual void Lose()
         {
             CurrentBet = null;
         }
