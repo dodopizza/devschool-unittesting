@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public class Player
+    public class Player : IPlayer
     {
         private RollDiceGame currentGame;
         public bool IsInGame => currentGame != null;
@@ -46,7 +46,7 @@ namespace Domain
 
         public Bet CurrentBet { get; private set; }
 
-        public void Win(int chipsAmount)
+        public virtual void Win(int chipsAmount)
         {
             availableChips = new Chip(availableChips.Amount + chipsAmount);
             CurrentBet = null;

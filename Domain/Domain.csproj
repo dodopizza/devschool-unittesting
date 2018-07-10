@@ -41,6 +41,9 @@
   <ItemGroup>
     <Compile Include="Bet.cs" />
     <Compile Include="Chip.cs" />
+    <Compile Include="Dice.cs" />
+    <Compile Include="IDice.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RollDiceGame.cs" />

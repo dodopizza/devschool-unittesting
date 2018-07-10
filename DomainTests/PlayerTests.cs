@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 using Domain;
+using Moq;
 using Xunit;
 
 namespace DomainTests
@@ -108,6 +109,85 @@ namespace DomainTests
             player.Bet(bet);
             
             Assert.Equal(null, player.CurrentBet);
+        }
+        
+//        [Fact]
+//        [Description("Я, как игрок, могу проиграть, если сделал неправильную ставку")]
+//        public void CanLoose_WhenBetWrong()
+//        {
+//            var luckyBet = 6;
+//            var badBet = 5;
+//            var player = new Player();
+//            var chip = new Chip(1);
+//            var bet = new Bet(chip, badBet);
+//            var game = new RollDiceGame(luckyBet);
+//            player.Join(game);
+//            player.Bet(bet);
+//
+//            game.Play();
+//
+//            Assert.Equal(null, player.CurrentBet);
+//        }
+//        
+//        [Fact]
+//        [Description("Я, как игрок, могу выиграть 6 ставок, если сделал правильную ставку")]
+//        public void CanWin6Chips_WhenRightBet()
+//        {
+//            var chipAmount = 10;
+//            var luckyBet = 6;
+//            var player = new PlayerMock();
+//            var chip = new Chip(chipAmount);
+//            var bet = new Bet(chip, luckyBet);
+//            var game = new RollDiceGame(luckyBet);
+//            player.Join(game);
+//            player.Bet(bet);
+//
+//            game.Play();
+//
+//            Assert.Equal(chipAmount * 6, player.lastWin);
+//        }
+        
+        [Fact]
+        [Description("Game.Play() вызывает Player.Win() для всех игроков в игре, сделавших правильную ставку")]
+        public void ShouldWin_WhenGoodBet()
+        {
+            var luckyBet = 1;
+            var dice = new Mock<IDice>();
+            dice.Setup(x => x.Roll()).Returns(luckyBet);
+            var player = new Mock<IPlayer>();
+            var chipAmount = 10;
+            var chip = new Chip(chipAmount);
+            var game = new RollDiceGame(dice.Object);
+            
+            var bet = new Bet(chip, luckyBet);
+            player.Setup(x => x.CurrentBet).Returns(bet);
+            player.Setup(x => x.Win(It.IsAny<int>()));
+
+            game.AddPlayer(player.Object);
+            game.Play();
+
+            player.Verify(x => x.Win(It.IsAny<int>()), Times.Once);
+        }
+        
+        [Fact]
+        [Description("Game.Play() вызывает Player.Lose() для всех игроков в игре, сделавших неправильную ставку")]
+        public void ShouldLose_WhenBadBet()
+        {
+            var luckyBet = 1;
+            var dice = new Mock<IDice>();
+            dice.Setup(x => x.Roll()).Returns(luckyBet);
+            var player = new Mock<IPlayer>();
+            var chipAmount = 10;
+            var chip = new Chip(chipAmount);
+            var game = new RollDiceGame(dice.Object);
+            
+            var bet = new Bet(chip, 2);
+            player.Setup(x => x.CurrentBet).Returns(bet);
+
+            game.AddPlayer(player.Object);
+            game.Play();
+
+            player.Verify(x => x.Lose(), Times.Once);
         }
     }
 }
