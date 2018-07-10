@@ -7,6 +7,8 @@ namespace Domain
         private RollDiceGame currentGame;
         public bool IsInGame => currentGame != null;
 
+        public virtual Chip AvailableChips => availableChips;
+
         public void Join(RollDiceGame game)
         {
             if (IsInGame)
