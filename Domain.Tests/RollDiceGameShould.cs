@@ -30,5 +30,22 @@ namespace Domain.Tests
 
             diceMock.Verify(d => d.GetLuckyScore(), Times.Once);
         }
+
+        [Fact]
+        public void SetWinAllPlayersWithRightBet()
+        {
+            var diceStub = new Mock<IDice>();
+            var game = new RollDiceGame(diceStub.Object);
+            var playerMock = new Mock<Player>();
+
+            diceStub.Setup(d => d.GetLuckyScore()).Returns(5);
+
+            playerMock.Object.Join(game);
+            playerMock.Object.Bet(new Bet(new Chip(10), 5));
+
+            game.Play();
+
+            playerMock.Verify(p => p.Win(It.IsAny<int>()), Times.Once);
+        }
     }
 }
