@@ -6,6 +6,12 @@ namespace Domain
     public class RollDiceGame
     {
         private List<Player> players = new List<Player>();
+        private IDice dice;
+
+        public RollDiceGame(IDice dice)
+        {
+            this.dice = dice;
+        }
 
         public void AddPlayer(Player player)
         {
@@ -23,7 +29,7 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = new Random(DateTime.Now.Millisecond).Next(1, 6);
+            var luckyScore = dice.GetLuckyScore();
             foreach (var player in players)
             {
                 if (player.CurrentBet.Score == luckyScore)
@@ -36,5 +42,18 @@ namespace Domain
                 }
             }
         }
+    }
+
+    public class Dice : IDice
+    {
+        public int GetLuckyScore()
+        {
+            return new Random(DateTime.Now.Millisecond).Next(1, 6);
+        }
+    }
+
+    public interface IDice
+    {
+        int GetLuckyScore();
     }
 }

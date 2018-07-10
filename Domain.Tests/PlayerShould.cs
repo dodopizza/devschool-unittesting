@@ -9,8 +9,9 @@ namespace Domain.Tests
         //Я, как игрок, могу войти в игру
         public void JoinGameIfNotJoined()
         {
+            var dice = new Dice();
             var testedPlayer = new Player();
-            var customGame = new RollDiceGame();
+            var customGame = new RollDiceGame(dice);
 
             testedPlayer.Join(customGame);
 
@@ -21,8 +22,9 @@ namespace Domain.Tests
         //Я, как игрок, могу выйти из игры
         public void LeaveGameIfJoinedBefore()
         {
+            var dice = new Dice();
             var testedPlayer = new Player();
-            var customGame = new RollDiceGame();
+            var customGame = new RollDiceGame(dice);
 
             testedPlayer.Join(customGame);
             testedPlayer.LeaveGame();
@@ -45,9 +47,10 @@ namespace Domain.Tests
         //Я, как игрок, могу играть только в одну игру одновременно
         public void PlayOnlyOneGame()
         {
+            var dice = new Dice();
             var testedPlayer = new Player();
-            var firstGame = new RollDiceGame();
-            var secondGame = new RollDiceGame();
+            var firstGame = new RollDiceGame(dice);
+            var secondGame = new RollDiceGame(dice);
 
             testedPlayer.Join(firstGame);
             Action joinAct = () => testedPlayer.Join(secondGame);
