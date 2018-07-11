@@ -5,9 +5,15 @@ namespace Domain
 {
     public class RollDiceGame
     {
-        private List<Player> players = new List<Player>();
+        private readonly IDice _dice;
+        private List<IPlayer> players = new List<IPlayer>();
 
-        public void AddPlayer(Player player)
+        public RollDiceGame(IDice dice)
+        {
+            _dice = dice;
+        }
+        
+        public void AddPlayer(IPlayer player)
         {
             if (players.Count == 6)
             {
@@ -16,14 +22,14 @@ namespace Domain
             players.Add(player);
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(IPlayer player)
         {
             players.Remove(player);
         }
 
         public void Play()
         {
-            var luckyScore = new Random(DateTime.Now.Millisecond).Next(1, 6);
+            var luckyScore = _dice.Roll();
             foreach (var player in players)
             {
                 if (player.CurrentBet.Score == luckyScore)
