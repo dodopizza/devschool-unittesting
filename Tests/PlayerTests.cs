@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Dynamic;
 using Domain;
-using NUnit.Framework;
 using Tests.DSL;
+using Xunit;
 
 namespace Tests
 {
-    [TestFixture]
     public class PlayerTests
     {
-        [Test]
+        private readonly Father Create = new Father();
+        
+        [Fact]
         public void Join_IsInGame()
         {
             var player = new Player();
@@ -19,7 +21,7 @@ namespace Tests
             Assert.True(player.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void ByDefault_NotInGame()
         {
             var player = new Player();
@@ -27,15 +29,15 @@ namespace Tests
             Assert.False(player.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void Leave_DefaultPlayer_ThrowsInvalidOperationException()
         {
             var player = new Player();
 
-            Assert.Catch<InvalidOperationException>(() => player.LeaveGame());
+            Assert.Throws<InvalidOperationException>(() => player.LeaveGame());
         }
 
-        [Test]
+        [Fact]
         public void Leave_AfterJoin_IsNotInGame()
         {
             var player = new Player();
@@ -46,38 +48,38 @@ namespace Tests
             Assert.False(player.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void Leave_TwoTimesAfterJoin_ThrowsInvalidOperationException()
         {
             var player = new Player();
             player.Join(new RollDiceGame());
             player.LeaveGame();
 
-            Assert.Catch<InvalidOperationException>(() => player.LeaveGame());
+            Assert.Throws<InvalidOperationException>(() => player.LeaveGame());
         }
 
-        [Test]
+        [Fact]
         public void JoinAnotherGame_AlreadyInGame_ThrowsInvalidOperationException()
         {
             var player = new Player();
             player.Join(new RollDiceGame());
 
-            Assert.Catch<InvalidOperationException>(() =>
+            Assert.Throws<InvalidOperationException>(() =>
                     player.Join(new RollDiceGame()));
         }
 
-        [Test]
+        [Fact]
         public void JoinTheSameGame_AlreadyInGame_ThrowsInvalidOperationException()
         {
             var player = new Player();
             var game = new RollDiceGame();
             player.Join(game);
 
-            Assert.Catch<InvalidOperationException>(() =>
+            Assert.Throws<InvalidOperationException>(() =>
                     player.Join(game));
         }
 
-        [Test]
+        [Fact]
         public void CanJoinGame_AfterLeavingPreviousGame()
         {
             var player = new Player();
@@ -90,7 +92,7 @@ namespace Tests
             Assert.True(player.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void TwoPlayersCanJoinAGame()
         {
             var game = new RollDiceGame();
@@ -102,7 +104,7 @@ namespace Tests
             Assert.True(player.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void SixPlayersCanJoinAGame()
         {
             var game = Create.Game.With(5.Players());
@@ -113,16 +115,16 @@ namespace Tests
             Assert.True(player6.IsInGame);
         }
 
-        [Test]
+        [Fact]
         public void SeventhPlayerCanNotJoinAGame()
         {
             RollDiceGame game = Create.Game.With(6.Players());
             var player7 = new Player();
 
-            Assert.Catch<TooManyPlayersException>(() => player7.Join(game));
+            Assert.Throws<TooManyPlayersException>(() => player7.Join(game));
         }
 
-        [Test]
+        [Fact]
         public void PlayerWith1Chip_CanMake1ChipBet()
         {
             var player = new Player();
@@ -132,13 +134,5 @@ namespace Tests
             
             Assert.False(player.Has(1.Chips()));
         }
-
-        [SetUp]
-        public void SetUp()
-        {
-            Create = new Father();
-        }
-
-        public Father Create;
     }
 }
