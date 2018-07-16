@@ -12,7 +12,9 @@ namespace Domain
         {
             _dice = dice;
         }
-        
+
+        public int PlayerCount => players.Count;
+
         public void AddPlayer(IPlayer player)
         {
             if (players.Count == 6)
