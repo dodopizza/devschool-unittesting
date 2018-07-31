@@ -41,6 +41,17 @@ namespace Tests
 
             Assert.Equal(10, player.AvailableChips);
         }
+
+        [Fact]
+        public void BeAbleMakeBet()
+        {
+            var player = new Player();
+            var game = new Game();
+
+            player.MakeBet(game, 10, 5);
+
+            Assert.Equal(-5, player.AvailableChips - 5);
+        }
     }
 
     internal class Casino

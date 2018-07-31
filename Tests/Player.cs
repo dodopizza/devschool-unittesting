@@ -19,5 +19,10 @@ namespace Tests
         {
             
         }
+
+        public void MakeBet(Game game, int betNumber, int betChips)
+        {
+            game.Bank += betChips;
+        }
     }
 }

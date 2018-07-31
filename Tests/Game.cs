@@ -4,6 +4,8 @@ namespace Tests
 {
     internal class Game
     {
+        public int Bank { get; set; }
+
         public Game()
         {
         }
