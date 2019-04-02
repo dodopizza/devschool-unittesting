@@ -13,7 +13,7 @@ namespace Domain.Tests
         [Test]
         public void IsNotInGame_WhenNew()
         {
-            var player = new Player();
+            var player = CreatePlayer();
 
             Assert.False(player.IsInGame);
         }
@@ -21,8 +21,10 @@ namespace Domain.Tests
         [Test]
         public void CanJoinGame_WhenNotInGame()
         {
-            var game = new RollDiceGame();
-            var player = new Player();
+            var game = new RollDiceGame(new Randomizer.Randomizer(
+                (from, to) => new Random(DateTime.Now.Millisecond).Next(from, to)
+            ));
+            var player = CreatePlayer();
 
             player.Join(game);
 
@@ -32,8 +34,8 @@ namespace Domain.Tests
         [Test]
         public void CanLeaveGame_WhenInGame()
         {
-            var game = new RollDiceGame();
-            var player = new Player();
+            var game = CreateRollDiceGame();
+            var player = CreatePlayer();
             player.Join(game);
 
             player.LeaveGame();
@@ -44,18 +46,26 @@ namespace Domain.Tests
         [Test]
         public void FailsToJoinGame_WhenInGame()
         {
-            var game = new RollDiceGame();
-            var player = new Player();
+            var game = CreateRollDiceGame();
+            var player = CreatePlayer();
             player.Join(game);
 
             Assert.Throws<InvalidOperationException>(() => player.Join(game));
         }
 
+        private static RollDiceGame CreateRollDiceGame()
+        {
+            var game = new RollDiceGame(new Randomizer.Randomizer(
+                (from, to) => new Random(DateTime.Now.Millisecond).Next(from, to)
+            ));
+            return game;
+        }
+
         [Test]
         public void HasChips_WhenBuyChips()
         {
-            var chip = new Chip(10);
-            var player = new Player();
+            var chip = CreateChip(10);
+            var player = CreatePlayer();
 
             player.Buy(chip);
 
@@ -65,20 +75,38 @@ namespace Domain.Tests
         [Test]
         public void CurrentBetIsSet_WhenBet()
         {
-            var chip = new Chip(10);
-            var bet = new Bet(chip, 10);
-            var player = new Player();
-            player.Buy(chip);
+            var bet = CreateBet(1, 2);
+            var player = CreatePlayer();
+            player.Buy(CreateChip(1));
 
             player.Bet(bet);
 
             Assert.AreEqual(bet, player.CurrentBet);
         }
 
+        private static Player CreatePlayer()
+        {
+            var player = new Player();
+            return player;
+        }
+
+        private static Bet CreateBet(int amount, int score)
+        {
+            var chip = CreateChip(amount);
+            var bet = new Bet(chip, score);
+            return bet;
+        }
+
+        private static Chip CreateChip(int amount)
+        {
+            var chip = new Chip(amount);
+            return chip;
+        }
+
         [Test]
         public void ChipsAmountAdded_WhenWins()
         {
-            var player = new Player();
+            var player = CreatePlayer();
 
             player.Win(10);
 
