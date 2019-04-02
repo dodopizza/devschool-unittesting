@@ -44,15 +44,15 @@ namespace Domain
             CurrentBet = bet;
         }
 
-        public Bet CurrentBet { get; private set; }
+        public virtual Bet CurrentBet { get; private set; }
 
-        public void Win(int chipsAmount)
+        public virtual void Win(int chipsAmount)
         {
             availableChips = new Chip(availableChips.Amount + chipsAmount);
             CurrentBet = null;
         }
 
-        public void Lose()
+        public virtual void Lose()
         {
             CurrentBet = null;
         }
