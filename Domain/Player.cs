@@ -13,6 +13,7 @@ namespace Domain
             {
                 throw new InvalidOperationException();
             }
+
             currentGame = game;
             currentGame.AddPlayer(this);
         }
@@ -23,6 +24,7 @@ namespace Domain
             {
                 throw new InvalidOperationException();
             }
+
             currentGame.RemovePlayer(this);
             currentGame = null;
         }
