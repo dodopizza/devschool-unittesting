@@ -15,6 +15,8 @@ namespace Domain
         private RollDiceGame currentGame;
         public bool IsInGame => currentGame != null;
 
+        public int AvailableChipsAmount => availableChips.Amount;
+
         public Bet CurrentBet { get; private set; }
 
         public void Join(RollDiceGame game)

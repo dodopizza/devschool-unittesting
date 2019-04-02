@@ -7,6 +7,8 @@ namespace Domain
     {
         private readonly IDieRoller _dieRoller;
         private readonly List<IPlayer> players = new List<IPlayer>();
+        public const int MaxPlayers = 6; 
+        public const int WinFactor = 6; 
 
         public RollDiceGame(IDieRoller dieRoller)
         {
@@ -15,7 +17,7 @@ namespace Domain
 
         public void AddPlayer(IPlayer player)
         {
-            if (players.Count == 6) throw new TooManyPlayersException();
+            if (players.Count == MaxPlayers) throw new TooManyPlayersException();
             players.Add(player);
         }
  
@@ -29,7 +31,7 @@ namespace Domain
             var luckyScore = _dieRoller.RollDice();
             foreach (var player in players)
                 if (player.CurrentBet.Score == luckyScore)
-                    player.Win(player.CurrentBet.Chips.Amount * 6);
+                    player.Win(player.CurrentBet.Chips.Amount * WinFactor);
                 else
                     player.Lose();
         }
