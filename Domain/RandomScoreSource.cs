@@ -8,7 +8,15 @@ namespace Domain
 
         public int GetScore()
         {
-            return _random.Next(1, 6);
+            var rollCount = _random.Next(1, 6);
+
+            var lastRoll = 0;
+            for (var i = 0; i < rollCount; i++)
+            {
+                lastRoll = _random.Next(1, 6);
+            }
+
+            return lastRoll;
         }
     }
 }
