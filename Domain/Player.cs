@@ -5,6 +5,7 @@ namespace Domain
     public class Player
     {
         private RollDiceGame currentGame;
+
         public bool IsInGame => currentGame != null;
 
         public void Join(RollDiceGame game)
