@@ -55,7 +55,7 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void PlayerWins10Chips_WhenPlayerHas0Chips_HeDoesntHave10Chips()
+        public void PlayerWins10Chips_WhenPlayerHas0Chips_HeDoesntHave11Chips()
         {
             var player = new Player();
 
