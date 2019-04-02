@@ -31,7 +31,7 @@ namespace Tests
             
             Assert.Null(_playerWithBet.CurrentBet);
         }
-        
+         
         [Test]
         public void NotHasCurrentBet_WhenHeWin()
         {

@@ -13,7 +13,7 @@ namespace Tests
         public void SetUp()
         {
             _player = new Player();
-            _game = new RollDiceGame();
+            _game = new RollDiceGame(new DiceRoller());
         }
         
         [Test]

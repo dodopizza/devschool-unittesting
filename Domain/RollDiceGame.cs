@@ -5,6 +5,13 @@ namespace Domain
 {
     public class RollDiceGame
     {
+        private readonly IDiceRoller _diceRoller;
+
+        public RollDiceGame(IDiceRoller diceRoller)
+        {
+            _diceRoller = diceRoller;
+        }
+        
         private List<Player> players = new List<Player>();
 
         public void AddPlayer(Player player)
@@ -23,7 +30,7 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = new Random(DateTime.Now.Millisecond).Next(1, 6);
+            var luckyScore = _diceRoller.Roll();
             foreach (var player in players)
             {
                 if (player.CurrentBet.Score == luckyScore)
