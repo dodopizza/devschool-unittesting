@@ -6,11 +6,12 @@ namespace TestProject1
 {
     public class WhenPlayer
     {
-        private Player player = new Player();
+        private RollDiceGame game = new RollDiceGame(new ConstantScoreSource(1));
+        private readonly Player player = new Player();
 
         public WhenPlayer()
         {
-            player.Join(new RollDiceGame());
+            player.Join(game);
         }
 
         [Fact]
@@ -23,7 +24,7 @@ namespace TestProject1
         public void IsInGame_ItCanNotStartsGameAgain()
         {
             Assert.Throws<InvalidOperationException>(
-                () => player.Join(new RollDiceGame())
+                () => player.Join(new RollDiceGame(new ConstantScoreSource(2)))
             );
         }
 
@@ -60,6 +61,28 @@ namespace TestProject1
             player.Lose();
 
             Assert.Null(player.CurrentBet);
+        }
+
+        [Fact]
+        public void Wins_ItGetsChips()
+        {
+            var bet = new Bet(new Chip(1), 1);
+            player.Bet(bet);
+
+            game.Play();
+
+            Assert.True(player.Has(new Chip(1)));
+        }
+
+        [Fact]
+        public void Looses_ItGetsNothing()
+        {
+            var bet = new Bet(new Chip(1), 2);
+            player.Bet(bet);
+
+            game.Play();
+
+            Assert.False(player.Has(new Chip(1)));
         }
     }
 }

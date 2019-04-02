@@ -5,7 +5,13 @@ namespace Domain
 {
     public class RollDiceGame
     {
+        private readonly IScoreSource _scoreSource;
         private List<Player> players = new List<Player>();
+
+        public RollDiceGame(IScoreSource scoreSource)
+        {
+            _scoreSource = scoreSource;
+        }
 
         public void AddPlayer(Player player)
         {
@@ -23,7 +29,7 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = new Random(DateTime.Now.Millisecond).Next(1, 6);
+            var luckyScore = _scoreSource.GetScore();
             foreach (var player in players)
             {
                 if (player.CurrentBet.Score == luckyScore)
