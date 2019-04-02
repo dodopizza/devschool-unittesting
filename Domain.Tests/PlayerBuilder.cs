@@ -26,11 +26,10 @@ namespace Domain.Tests
             return this;
         }
 
-        public PlayerBuilder JoinRollDiceGameWithLuckyScore(int luckyScore)
+        public PlayerBuilder JoinRollDiceGame(RollDiceGame game)
         {
-            var game = new RollDiceGame(new DiceMock(luckyScore));
             Current.Join(game);
-
+            
             return this;
         }
     }
