@@ -1,4 +1,5 @@
 using System;
+using Moq;
 using NUnit.Framework;
 
 namespace Domain.Tests
@@ -10,7 +11,7 @@ namespace Domain.Tests
         public void Setup()
         {
             player = new Player();
-            var diceRoller = new FakeDiceRoller(5);
+            var diceRoller = new Mock<IDieRoller>().Object;
             anyGame = new RollDiceGame(diceRoller);
             anyOtherGame = new RollDiceGame(diceRoller);
             anyBet = 42.Chips().BetOn(10);

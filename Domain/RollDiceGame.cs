@@ -5,12 +5,12 @@ namespace Domain
 {
     public class RollDiceGame
     {
-        private readonly IDiceRoller _diceRoller;
+        private readonly IDieRoller _dieRoller;
         private readonly List<IPlayer> players = new List<IPlayer>();
 
-        public RollDiceGame(IDiceRoller diceRoller)
+        public RollDiceGame(IDieRoller dieRoller)
         {
-            _diceRoller = diceRoller;
+            _dieRoller = dieRoller;
         }
 
         public void AddPlayer(IPlayer player)
@@ -26,7 +26,7 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = _diceRoller.RollDice();
+            var luckyScore = _dieRoller.RollDice();
             foreach (var player in players)
                 if (player.CurrentBet.Score == luckyScore)
                     player.Win(player.CurrentBet.Chips.Amount * 6);

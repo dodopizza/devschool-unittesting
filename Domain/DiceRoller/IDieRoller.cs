@@ -1,6 +1,6 @@
 namespace Domain
 {
-    public interface IDiceRoller
+    public interface IDieRoller
     {
         int RollDice();
     }
