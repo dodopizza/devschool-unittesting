@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Moq;
 
@@ -33,7 +32,7 @@ namespace Domain.Tests
         private static IDice GetRepeatDiceMock(int score)
         {
             var mock = new Mock<IDice>();
-            mock.Setup(x => x.GetScore()).Returns(() => Enumerable.Range(0, new Random().Next(1, 6)).Select(x => new Random().Next(1, 6)).Last());
+            mock.Setup(x => x.GetScore()).Returns(() => Enumerable.Range(0, It.IsInRange(1,6, Range.Inclusive)).Select(x => It.IsInRange(1,6, Range.Inclusive)).Last());
 
             return mock.Object;
         }
