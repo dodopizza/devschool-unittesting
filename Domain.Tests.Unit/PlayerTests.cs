@@ -12,7 +12,7 @@ namespace Domain.Tests
             player = new Player();
             anyGame = new RollDiceGame();
             anyOtherGame = new RollDiceGame();
-            anyBet = new Bet(42.Chips(), 1);
+            anyBet = 42.Chips().BetOn(10);
         }
 
         private Player player;
@@ -85,6 +85,11 @@ namespace Domain.Tests
         public static Chip Chips(this int count)
         {
             return new Chip(count);
+        }
+
+        public static Bet BetOn(this Chip chips, int score)
+        {
+            return new Bet(chips, score);
         }
     }
 }
