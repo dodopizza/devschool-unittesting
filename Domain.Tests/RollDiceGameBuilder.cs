@@ -15,9 +15,9 @@ namespace Domain.Tests
 
         public RollDiceGame Build()
         {
-            return new RollDiceGame(new DiceMock(Score));
+            return new RollDiceGame(Score.HasValue ? (IDice) new DiceMock(Score.Value) : new Dice());
         }
 
-        private int Score { get; set; }
+        private int? Score { get; set; }
     }
 }
