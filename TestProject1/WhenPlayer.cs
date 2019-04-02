@@ -6,22 +6,22 @@ namespace TestProject1
 {
     public class WhenPlayer
     {
+        private Player player = new Player();
+
+        public WhenPlayer()
+        {
+            player.Join(new RollDiceGame());
+        }
+
         [Fact]
         public void StartsGame_ItIsInGame()
         {
-            var player = new Player();
-
-            player.Join(new RollDiceGame());
-
             Assert.True(player.IsInGame);
         }
 
         [Fact]
         public void IsInGame_ItCanNotStartsGameAgain()
         {
-            var player = new Player();
-            player.Join(new RollDiceGame());
-
             Assert.Throws<InvalidOperationException>(
                 () => player.Join(new RollDiceGame())
             );
@@ -30,9 +30,6 @@ namespace TestProject1
         [Fact]
         public void EndsGame_ItIsNoMoreInGame()
         {
-            var player = new Player();
-            player.Join(new RollDiceGame());
-
             player.LeaveGame();
 
             Assert.False(player.IsInGame);
@@ -41,8 +38,6 @@ namespace TestProject1
         [Fact]
         public void Buys10Chips_ItHasMoreThen5Chips()
         {
-            var player = new Player();
-
             player.Buy(new Chip(10));
 
             Assert.True(player.Has(new Chip(5)));
@@ -51,8 +46,6 @@ namespace TestProject1
         [Fact]
         public void MakeBet_ItHasCurrentBet()
         {
-            var player = new Player();
-
             var bet = new Bet(new Chip(5), 13);
             player.Bet(bet);
 
@@ -62,12 +55,10 @@ namespace TestProject1
         [Fact]
         public void MakeBetAndLoose_ItHasNoCurrentBet()
         {
-            var player = new Player();
-
             var bet = new Bet(new Chip(5), 13);
             player.Bet(bet);
             player.Lose();
-            
+
             Assert.Null(player.CurrentBet);
         }
     }
