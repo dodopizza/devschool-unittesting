@@ -7,12 +7,12 @@ namespace Domain.Tests
         [Fact]
         public void ThenBetUpdated()
         {
-            var player = new Player();
-            var bet = new Bet(new Chip(1), 1);
+            const int amount = 1;
+            var player = PlayerBuilder.GetPlayer().Build();
             
-            player.Bet(bet);
+            player.Bet(new Bet(new Chip(amount), 0));
 
-            Assert.Equal(bet, player.CurrentBet);
+            Assert.Equal(amount, player.CurrentBet.Chips.Amount);
         }
     }
 }

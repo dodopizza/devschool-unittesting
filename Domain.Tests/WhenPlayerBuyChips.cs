@@ -7,21 +7,19 @@ namespace Domain.Tests
         [Fact]
         public void ThenHeOwnChips()
         {
-            var player = new Player();
-            var chip = new Chip(1);
-            
-            player.Buy(chip);
+            var player = PlayerBuilder.GetPlayer().Build();
 
-            Assert.True(player.Has(chip));
+            player.Buy(new Chip(1));
+
+            Assert.True(player.Has(new Chip(1)));
         }
         
         [Fact]
-        public void ThenPlayerHaveNotMoreAviableChips()
+        public void ThenPlayerHaveNotMoreAvailableChips()
         {
-            var player = new Player();
-            var chip = new Chip(1);
-            
-            player.Buy(chip);
+            var player = PlayerBuilder.GetPlayer().Build();
+
+            player.Buy(new Chip(1));
 
             Assert.False(player.Has(new Chip(5)));
         }

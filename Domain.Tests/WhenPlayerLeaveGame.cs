@@ -8,9 +8,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayerLeft()
         {
-            var player = new Player();
-            var game = new RollDiceGame();
-            player.Join(game);
+            var player = PlayerBuilder.GetPlayer().InGame().Build();
             
             player.LeaveGame();
 
@@ -20,7 +18,7 @@ namespace Domain.Tests
         [Fact]
         public void AndPlayerNotInGameThenPlayerNotLeft()
         {
-            var player = new Player();
+            var player = PlayerBuilder.GetPlayer().Build();
 
             Assert.Throws<InvalidOperationException>(() => player.LeaveGame());
         }

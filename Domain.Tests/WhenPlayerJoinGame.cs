@@ -8,10 +8,9 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayerJoined()
         {
-            var player = new Player();
-            var game = new RollDiceGame();
-            
-            player.Join(game);
+            var player = PlayerBuilder.GetPlayer().Build();
+
+            player.Join(new RollDiceGame());
 
             Assert.True(player.IsInGame);
         }
@@ -19,11 +18,9 @@ namespace Domain.Tests
         [Fact]
         public void AndPlayerInGameThenPlayerNotJoined()
         {
-            var player = new Player();
-            var game = new RollDiceGame();
-            player.Join(game);
+            var player = PlayerBuilder.GetPlayer().InGame().Build();
 
-            Assert.Throws<InvalidOperationException>(() => player.Join(game));
+            Assert.Throws<InvalidOperationException>(() => player.Join(new RollDiceGame()));
         }
     }
 }

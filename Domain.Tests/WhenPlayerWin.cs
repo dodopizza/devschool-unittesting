@@ -7,9 +7,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenCurrentBetIsEmpty()
         {
-            var player = new Player();
-            var bet = new Bet(new Chip(1), 1);
-            player.Bet(bet);
+            var player = PlayerBuilder.GetPlayer().WithBet(1, 1).Build();
             
             player.Win(1);
 
@@ -19,15 +17,11 @@ namespace Domain.Tests
         [Fact]
         public void ThenAvailableChipsUpdated()
         {
-            const int winChips = 1;
+            var player = PlayerBuilder.GetPlayer().WithBet(1, 1).Build();
             
-            var player = new Player();
-            var bet = new Bet(new Chip(1), 1);
-            player.Bet(bet);
-            
-            player.Win(winChips);
+            player.Win(1);
 
-            Assert.True(player.Has(new Chip(winChips)));
+            Assert.True(player.Has(new Chip(1)));
         }
     }
 }
