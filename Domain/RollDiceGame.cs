@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Randomizer;
+using Domain.Dice;
 
 namespace Domain
 {
     public class RollDiceGame
     {
         private List<Player> players = new List<Player>();
-        private readonly IRandomizer _randomizer;
+        private readonly IDice _dice;
 
-        public RollDiceGame(IRandomizer randomizer)
+        public RollDiceGame(IDice dice)
         {
-            _randomizer = randomizer;
+            _dice = dice;
         }
 
         public void AddPlayer(Player player)
@@ -31,7 +31,15 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = _randomizer.GetScore(1, 6);
+            var rollCount = _dice.GetScore();
+            
+            int luckyScore;
+            var i = 0;
+            do
+            {
+                luckyScore = _dice.GetScore();
+                i++;
+            } while (i < rollCount);
 
             foreach (var player in players)
             {

@@ -21,9 +21,7 @@ namespace Domain.Tests
         [Test]
         public void CanJoinGame_WhenNotInGame()
         {
-            var game = new RollDiceGame(new Randomizer.Randomizer(
-                (from, to) => new Random(DateTime.Now.Millisecond).Next(from, to)
-            ));
+            var game = new RollDiceGame(new Dice.Dice());
             var player = CreatePlayer();
 
             player.Join(game);
@@ -55,9 +53,7 @@ namespace Domain.Tests
 
         private static RollDiceGame CreateRollDiceGame()
         {
-            var game = new RollDiceGame(new Randomizer.Randomizer(
-                (from, to) => new Random(DateTime.Now.Millisecond).Next(from, to)
-            ));
+            var game = new RollDiceGame(new Dice.Dice());
             return game;
         }
 

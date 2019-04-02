@@ -1,4 +1,6 @@
 using System;
+using Domain.Dice;
+using Moq;
 using NUnit.Framework;
 
 namespace Domain.Tests
@@ -8,7 +10,9 @@ namespace Domain.Tests
         [Test]
         public void PlayerWins_WhenBetOnLuckyScore()
         {
-            var game = new RollDiceGame(new Randomizer.Randomizer((from, to) => 5));
+            var mockDice = new Mock<IDice>();
+            mockDice.Setup(x => x.GetScore()).Returns(5);
+            var game = new RollDiceGame(mockDice.Object);
             var player = new Player();
             player.Join(game);
             player.Bet(new Bet(new Chip(1), 5));
