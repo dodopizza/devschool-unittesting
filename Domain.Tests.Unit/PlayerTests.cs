@@ -79,17 +79,4 @@ namespace Domain.Tests
             Assert.True(player.Has(10.Chips()));
         }
     }
-
-    public static class PlayerTestExtensions
-    {
-        public static Chip Chips(this int count)
-        {
-            return new Chip(count);
-        }
-
-        public static Bet BetOn(this Chip chips, int score)
-        {
-            return new Bet(chips, score);
-        }
-    }
 }
