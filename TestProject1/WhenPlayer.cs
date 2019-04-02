@@ -1,16 +1,21 @@
 using System;
 using Domain;
+using Moq;
 using Xunit;
 
 namespace TestProject1
 {
     public class WhenPlayer
     {
-        private RollDiceGame game = new RollDiceGame(new ConstantScoreSource(1));
+        private readonly RollDiceGame game;
         private readonly Player player = new Player();
 
         public WhenPlayer()
         {
+            var scoreSource = new Mock<IScoreSource>();
+            scoreSource.Setup(source => source.GetScore()).Returns(1);
+            game = new RollDiceGame(scoreSource.Object);
+
             player.Join(game);
         }
 
@@ -23,8 +28,10 @@ namespace TestProject1
         [Fact]
         public void IsInGame_ItCanNotStartsGameAgain()
         {
+            var scoreSource = new Mock<IScoreSource>();
+            scoreSource.Setup(source => source.GetScore()).Returns(2);
             Assert.Throws<InvalidOperationException>(
-                () => player.Join(new RollDiceGame(new ConstantScoreSource(2)))
+                () => player.Join(new RollDiceGame(scoreSource.Object))
             );
         }
 
