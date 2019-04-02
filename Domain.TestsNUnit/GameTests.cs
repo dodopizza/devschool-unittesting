@@ -1,4 +1,3 @@
-using AutoFixture;
 using Domain;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ namespace Tests
         private const int UnluckyScore = 4;
         
         private RollDiceGame _game;
-        private Player _player;
+        private PlayerSpy _player;
         
         [SetUp]
         public void SetUp()
@@ -20,13 +19,15 @@ namespace Tests
             diceRollerMock.Setup(roller => roller.Roll()).Returns(LuckyScore);
             
             _game = new RollDiceGame(diceRollerMock.Object);
-            _player = new Player();
+
+            _player = new PlayerSpy();
+            
             _game.AddPlayer(_player);
         }
         
         [Test]
         public void WhenPlayerWin_ShouldIncreaseChips6Times()
-        {   
+        {
             _player.Bet(new Bet(new Chip(10), LuckyScore));
             
             _game.Play();
@@ -35,6 +36,16 @@ namespace Tests
         }
         
         [Test]
+        public void WhenPlayerWin_ShouldHasNoCurrentBet()
+        {
+            _player.Bet(new Bet(new Chip(10), LuckyScore));
+            
+            _game.Play();
+            
+            Assert.Null(_player.CurrentBet);
+        }
+
+        [Test]
         public void WhenPlayerLose_ShouldHasNoCurrentBet()
         {
             _player.Bet(new Bet(new Chip(10), UnluckyScore));
@@ -42,6 +53,44 @@ namespace Tests
             _game.Play();
             
             Assert.Null(_player.CurrentBet);
+        }
+
+        [Test]
+        public void WhenPlayerWin_ShouldCallWin()
+        {
+            _player.Bet(new Bet(new Chip(10), LuckyScore));
+            
+            _game.Play();
+            
+            Assert.AreEqual(1, _player.WinCalled);
+        }
+
+        [Test]
+        public void WhenPlayerLose_ShouldCallLose()
+        {
+            _player.Bet(new Bet(new Chip(10), UnluckyScore));
+            
+            _game.Play();
+            
+            Assert.AreEqual(1, _player.LoseCalled);
+        }
+    }
+
+    public class PlayerSpy : Player
+    {
+        public int WinCalled { get; private set; }
+        public int LoseCalled { get; private set; }
+
+        public override void Win(int chipsAmount)
+        {
+            WinCalled++;
+            base.Win(chipsAmount);
+        }
+        
+        public override void Lose()
+        {
+            LoseCalled++;
+            base.Lose();
         }
     }
 }
