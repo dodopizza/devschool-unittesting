@@ -88,7 +88,6 @@ namespace DomainTests
             player.Win(10);
             
             Assert.True(player.Has(new Chip(10)));
-            Assert.False(player.Has(new Chip(11)));
         }
 
         private static void AddBetToPlayer(Player player)
@@ -96,6 +95,6 @@ namespace DomainTests
             var chips = new Chip(10);
             var bet = new Bet(chips, 5);
             player.Bet(bet);
-        }       
+        }
     }
 }
