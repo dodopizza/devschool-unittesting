@@ -10,7 +10,7 @@ namespace Domain.Tests
         {
             var player = PlayerBuilder.GetPlayer().Build();
 
-            player.Join(new RollDiceGame());
+            player.Join(new RollDiceGame(new Dice()));
 
             Assert.True(player.IsInGame);
         }
@@ -20,7 +20,7 @@ namespace Domain.Tests
         {
             var player = PlayerBuilder.GetPlayer().InGame().Build();
 
-            Assert.Throws<InvalidOperationException>(() => player.Join(new RollDiceGame()));
+            Assert.Throws<InvalidOperationException>(() => player.Join(new RollDiceGame(new Dice())));
         }
     }
 }

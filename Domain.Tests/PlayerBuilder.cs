@@ -22,7 +22,15 @@ namespace Domain.Tests
 
         public PlayerBuilder InGame()
         {
-            Current.Join(new RollDiceGame());
+            Current.Join(new RollDiceGame(new Dice()));
+            return this;
+        }
+
+        public PlayerBuilder JoinRollDiceGameWithLuckyScore(int luckyScore)
+        {
+            var game = new RollDiceGame(new DiceMock(luckyScore));
+            Current.Join(game);
+
             return this;
         }
     }
