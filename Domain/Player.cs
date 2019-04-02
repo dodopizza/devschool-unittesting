@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public class Player
+    public class Player : IPlayer
     {
         private RollDiceGame currentGame;
         public bool IsInGame => currentGame != null;

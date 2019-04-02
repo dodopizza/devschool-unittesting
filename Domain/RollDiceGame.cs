@@ -12,9 +12,9 @@ namespace Domain
             Dice = dice;
         }
         
-        private List<Player> players = new List<Player>();
+        private List<IPlayer> players = new List<IPlayer>();
 
-        public void AddPlayer(Player player)
+        public void AddPlayer(IPlayer player)
         {
             if (players.Count == 6)
             {
@@ -23,7 +23,7 @@ namespace Domain
             players.Add(player);
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(IPlayer player)
         {
             players.Remove(player);
         }

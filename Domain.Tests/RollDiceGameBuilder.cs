@@ -16,15 +16,23 @@ namespace Domain.Tests
             return this;
         }
 
+        public RollDiceGameBuilder WithDice(IDice dice)
+        {
+            Dice = dice;
+            return this;
+        }
+
         public RollDiceGame Build()
         {
-            return new RollDiceGame(Score.HasValue ? GetDiceMock(Score.Value) : new Dice());
+            return new RollDiceGame(Dice ?? (Score.HasValue ? GetDiceMock(Score.Value) : new Dice()));
         }
 
         private static IDice GetDiceMock(int score)
         {
+            return new DiceMock(score);
+            
             var mock = new Mock<IDice>();
-            mock.Setup(x=>x.GetScore()).Returns(score);
+            mock.Setup(x=>x.GetScore()).Returns(score).Verifiable();
 
             return mock.Object;
         }
@@ -38,5 +46,25 @@ namespace Domain.Tests
         }
 
         private int? Score { get; set; }
+
+        private IDice Dice { get; set; }
+    }
+
+    public class DiceMock : IDice
+    {
+        private int Score { get; }
+        
+        public int GetScoreRaiseCount { get; private set; }
+
+        public DiceMock(int score)
+        {
+            Score = score;
+        }
+
+        public int GetScore()
+        {
+            GetScoreRaiseCount++;
+            return Score;
+        }
     }
 }
