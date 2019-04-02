@@ -10,8 +10,9 @@ namespace Domain.Tests
         public void Setup()
         {
             player = new Player();
-            anyGame = new RollDiceGame();
-            anyOtherGame = new RollDiceGame();
+            var diceRoller = new FakeDiceRoller(5);
+            anyGame = new RollDiceGame(diceRoller);
+            anyOtherGame = new RollDiceGame(diceRoller);
             anyBet = 42.Chips().BetOn(10);
         }
 

@@ -2,7 +2,14 @@
 
 namespace Domain
 {
-    public class Player
+    public interface IPlayer
+    {
+        Bet CurrentBet { get; }
+        void Win(int chipsAmount);
+        void Lose();
+    }
+
+    public class Player : IPlayer
     {
         private Chip availableChips = new Chip(0);
         private RollDiceGame currentGame;

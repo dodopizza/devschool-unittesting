@@ -5,22 +5,28 @@ namespace Domain
 {
     public class RollDiceGame
     {
-        private readonly List<Player> players = new List<Player>();
+        private readonly IDiceRoller _diceRoller;
+        private readonly List<IPlayer> players = new List<IPlayer>();
 
-        public void AddPlayer(Player player)
+        public RollDiceGame(IDiceRoller diceRoller)
+        {
+            _diceRoller = diceRoller;
+        }
+
+        public void AddPlayer(IPlayer player)
         {
             if (players.Count == 6) throw new TooManyPlayersException();
             players.Add(player);
         }
-
-        public void RemovePlayer(Player player)
+ 
+        public void RemovePlayer(IPlayer player)
         {
             players.Remove(player);
         }
 
         public void Play()
         {
-            var luckyScore = new Random(DateTime.Now.Millisecond).Next(1, 6);
+            var luckyScore = _diceRoller.RollDice();
             foreach (var player in players)
                 if (player.CurrentBet.Score == luckyScore)
                     player.Win(player.CurrentBet.Chips.Amount * 6);
