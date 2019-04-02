@@ -36,6 +36,7 @@ namespace TestProject1
         }
 
         [Fact]
+        public void Buys10Chips_ItHasMoreThan5Chips()
         {
             player.Buy(new Chip(10));
 
