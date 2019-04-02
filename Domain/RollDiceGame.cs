@@ -6,31 +6,31 @@ namespace Domain
     public class RollDiceGame
     {
         private readonly IScoreSource _scoreSource;
-        private List<Player> players = new List<Player>();
+        private readonly List<IPlayer> _players = new List<IPlayer>();
 
         public RollDiceGame(IScoreSource scoreSource)
         {
             _scoreSource = scoreSource;
         }
 
-        public void AddPlayer(Player player)
+        public void AddPlayer(IPlayer player)
         {
-            if (players.Count == 6)
+            if (_players.Count == 6)
             {
                 throw new TooManyPlayersException();
             }
-            players.Add(player);
+            _players.Add(player);
         }
 
-        public void RemovePlayer(Player player)
+        public void RemovePlayer(IPlayer player)
         {
-            players.Remove(player);
+            _players.Remove(player);
         }
 
         public void Play()
         {
             var luckyScore = _scoreSource.GetScore();
-            foreach (var player in players)
+            foreach (var player in _players)
             {
                 if (player.CurrentBet.Score == luckyScore)
                 {
