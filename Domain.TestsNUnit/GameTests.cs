@@ -1,4 +1,6 @@
+using AutoFixture;
 using Domain;
+using Moq;
 using NUnit.Framework;
 
 namespace Tests
@@ -14,15 +16,17 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            _game = new RollDiceGame(new DeterminedDiceRoller(LuckyScore));
+            var diceRollerMock = new Mock<IDiceRoller>();
+            diceRollerMock.Setup(roller => roller.Roll()).Returns(LuckyScore);
+            
+            _game = new RollDiceGame(diceRollerMock.Object);
             _player = new Player();
             _game.AddPlayer(_player);
         }
         
-        
         [Test]
         public void WhenPlayerWin_ShouldIncreaseChips6Times()
-        {
+        {   
             _player.Bet(new Bet(new Chip(10), LuckyScore));
             
             _game.Play();

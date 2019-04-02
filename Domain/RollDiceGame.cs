@@ -30,7 +30,14 @@ namespace Domain
 
         public void Play()
         {
-            var luckyScore = _diceRoller.Roll();
+            var rollCount = _diceRoller.Roll();
+
+            int luckyScore = 0;
+            for (int i = 0; i < rollCount; i++)
+            {
+                luckyScore = _diceRoller.Roll();
+            }
+            
             foreach (var player in players)
             {
                 if (player.CurrentBet.Score == luckyScore)
