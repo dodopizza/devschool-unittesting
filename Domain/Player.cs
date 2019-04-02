@@ -4,15 +4,15 @@ namespace Domain
 {
     public class Player
     {
+        private Chip availableChips = new Chip(0);
         private RollDiceGame currentGame;
         public bool IsInGame => currentGame != null;
 
+        public Bet CurrentBet { get; private set; }
+
         public void Join(RollDiceGame game)
         {
-            if (IsInGame)
-            {
-                throw new InvalidOperationException();
-            }
+            if (IsInGame) throw new InvalidOperationException();
 
             currentGame = game;
             currentGame.AddPlayer(this);
@@ -20,10 +20,7 @@ namespace Domain
 
         public void LeaveGame()
         {
-            if (!IsInGame)
-            {
-                throw new InvalidOperationException();
-            }
+            if (!IsInGame) throw new InvalidOperationException();
 
             currentGame.RemovePlayer(this);
             currentGame = null;
@@ -34,8 +31,6 @@ namespace Domain
             availableChips = chips;
         }
 
-        private Chip availableChips = new Chip(0);
-
         public bool Has(Chip chips)
         {
             return availableChips >= chips;
@@ -45,8 +40,6 @@ namespace Domain
         {
             CurrentBet = bet;
         }
-
-        public Bet CurrentBet { get; private set; }
 
         public void Win(int chipsAmount)
         {

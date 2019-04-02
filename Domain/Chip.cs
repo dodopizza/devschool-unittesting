@@ -2,12 +2,12 @@
 {
     public class Chip
     {
-        public int Amount { get; }
-
         public Chip(int amount)
         {
             Amount = amount;
         }
+
+        public int Amount { get; }
 
         public static bool operator >=(Chip a, Chip b)
         {
