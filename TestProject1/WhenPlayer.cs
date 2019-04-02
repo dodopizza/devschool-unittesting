@@ -58,5 +58,17 @@ namespace TestProject1
 
             Assert.Equal(bet, player.CurrentBet);
         }
+
+        [Fact]
+        public void MakeBetAndLoose_ItHasNoCurrentBet()
+        {
+            var player = new Player();
+
+            var bet = new Bet(new Chip(5), 13);
+            player.Bet(bet);
+            player.Lose();
+            
+            Assert.Null(player.CurrentBet);
+        }
     }
 }
