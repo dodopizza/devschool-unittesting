@@ -4,10 +4,10 @@ using Xunit;
 
 namespace TestProject1
 {
-    public class UnitTest1
+    public class WhenPlayer
     {
         [Fact]
-        public void IsInGame_True_After_Join()
+        public void StartsGame_IsInGame()
         {
             var player = new Player();
             player.Join(new RollDiceGame());
@@ -15,7 +15,7 @@ namespace TestProject1
         }
 
         [Fact]
-        public void Join_Throws_If_Called_Twice()
+        public void IsInGame_CanNotStartsGameAgain()
         {
             var player = new Player();
             player.Join(new RollDiceGame());
@@ -25,7 +25,7 @@ namespace TestProject1
         }
 
         [Fact]
-        public void IsInGame_False_After_Leave()
+        public void EndsGame_NoMoreInGame()
         {
             var player = new Player();
             player.Join(new RollDiceGame());
