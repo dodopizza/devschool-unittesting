@@ -1,3 +1,5 @@
+using System;
+
 namespace JoyCasino.Domain
 {
     public class Player
@@ -24,6 +26,9 @@ namespace JoyCasino.Domain
 
         public void Bet(int amount)
         {
+            if (amount > ChipsAmount)
+                throw new InvalidOperationException();
+                
             CurrentBet = amount;
         }
     }

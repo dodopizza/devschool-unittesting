@@ -1,3 +1,4 @@
+using System;
 using JoyCasino.Domain;
 using Xunit;
 
@@ -45,6 +46,15 @@ namespace JoyCasino.Tests
             player.Bet(1);
             
             Assert.Equal(1, player.CurrentBet);
+        }
+        
+
+        [Fact]
+        public void WhenBetMoreThanBought_ThenFail()
+        {
+            var player = Create.Player.WithChips(1).Build();
+
+            Assert.Throws<InvalidOperationException>(() => player.Bet(2));
         }
     }
 }
