@@ -65,11 +65,12 @@ namespace Tests
         public void CanBet()
         {
             var player = new Player();
+            player.BuyChips(1);
 
-            player.Bet(10, 2);
+            player.Bet(1, 2);
 
-            Assert.Equal(10, player.BetChips);
-            Assert.Equal(2, player.BetScore);
+            Assert.Equal(1, player.Bets[0].Chips);
+            Assert.Equal(2, player.Bets[0].Score);
         }
 
         [Fact]
@@ -82,5 +83,19 @@ namespace Tests
                 () => player.Bet(2, 2)
             );
         }
+
+        [Fact]
+        public void CanBetManyTimes()
+        {
+            var player = new Player();
+            player.BuyChips(6);
+
+            player.Bet(2,3);
+            player.Bet(4,5);
+
+            Assert.Equal(2,player.Bets.Length);
+        }
+
+
     }
 }
