@@ -22,7 +22,7 @@ namespace Domain.Tests
             return this;
         }
 
-        public RollDiceGame Build()
+        public RollDiceGame Please()
         {
             return new RollDiceGame(Dice ?? (Score.HasValue ? GetDiceMock(Score.Value) : new Dice()));
         }
@@ -54,7 +54,7 @@ namespace Domain.Tests
     {
         private int Score { get; }
         
-        public int GetScoreRaiseCount { get; private set; }
+        public int RollCount { get; private set; }
 
         public DiceMock(int score)
         {
@@ -63,7 +63,7 @@ namespace Domain.Tests
 
         public int GetScore()
         {
-            GetScoreRaiseCount++;
+            RollCount++;
             return Score;
         }
     }

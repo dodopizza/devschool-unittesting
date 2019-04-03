@@ -8,7 +8,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayerLeft()
         {
-            var player = PlayerBuilder.GetPlayer().InGame().Build();
+            var player = Create.Player.InGame().Please();
             
             player.LeaveGame();
 
@@ -18,7 +18,7 @@ namespace Domain.Tests
         [Fact]
         public void AndPlayerNotInGameThenPlayerNotLeft()
         {
-            var player = PlayerBuilder.GetPlayer().Build();
+            var player = Create.Player.Please();
 
             Assert.Throws<InvalidOperationException>(() => player.LeaveGame());
         }

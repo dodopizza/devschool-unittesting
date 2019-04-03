@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -7,21 +8,22 @@ namespace Domain.Tests
         [Fact]
         public void ThenCurrentBetIsEmpty()
         {
-            var player = PlayerBuilder.GetPlayer().WithBet(1, 1).Build();
+            var player = Create.Player.WithBet(1, 1).Please();
             
             player.Win(1);
 
-            Assert.Null(player.CurrentBet);
+            player.CurrentBet.Should().BeNull();
         }
         
         [Fact]
         public void ThenAvailableChipsUpdated()
         {
-            var player = PlayerBuilder.GetPlayer().WithBet(1, 1).Build();
+            var player = Create.Player.WithBet(1, 1).Please();
             
             player.Win(1);
 
-            Assert.True(player.Has(new Chip(1)));
+            var chip = Create.Chip.WithAmount(1).Please();
+            player.Has(chip).Should().BeTrue();
         }
     }
 }

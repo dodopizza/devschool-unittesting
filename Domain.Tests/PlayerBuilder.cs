@@ -15,7 +15,7 @@ namespace Domain.Tests
             return this;
         }
         
-        public Player Build()
+        public Player Please()
         {
             return Current;
         }

@@ -7,8 +7,8 @@ namespace Domain.Tests
         [Fact]
         public void AndTheyWinThenChipsUpdated()
         {
-            var game = RollDiceGameBuilder.GetGame().WithLuckyScore(2).Build();
-            var player = PlayerBuilder.GetPlayer().JoinRollDiceGame(game).WithBet(1, 2).Build();
+            var game = Create.Game.WithLuckyScore(2).Please();
+            var player = Create.Player.JoinRollDiceGame(game).WithBet(1, 2).Please();
 
             game.Play();
 
@@ -18,8 +18,8 @@ namespace Domain.Tests
         [Fact]
         public void AndTheyLoseThenChipsUpdated()
         {
-            var game = RollDiceGameBuilder.GetGame().WithLuckyScore(2).Build();
-            var player = PlayerBuilder.GetPlayer().JoinRollDiceGame(game).WithBet(1, 1).Build();
+            var game = Create.Game.WithLuckyScore(2).Please();
+            var player = Create.Player.JoinRollDiceGame(game).WithBet(1, 1).Please();
 
             game.Play();
 
@@ -29,7 +29,7 @@ namespace Domain.Tests
         [Fact]
         public void AndTheyWinThenPlayerAckAboutWin()
         {
-            var game = RollDiceGameBuilder.GetGame().WithLuckyScore(1).Build();
+            var game = Create.Game.WithLuckyScore(1).Please();
             var player1 = new PlayerFake(1);
             var player2 = new PlayerFake(1);
             game.AddPlayer(player1);
@@ -47,7 +47,7 @@ namespace Domain.Tests
         [Fact]
         public void AndTheyLoseThenPlayerAckAboutLose()
         {
-            var game = RollDiceGameBuilder.GetGame().WithLuckyScore(1).Build();
+            var game = Create.Game.WithLuckyScore(1).Please();
             var player1 = new PlayerFake(2);
             var player2 = new PlayerFake(2);
             game.AddPlayer(player1);
@@ -65,7 +65,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayersAckAboutWinAndLose()
         {
-            var game = RollDiceGameBuilder.GetGame().WithLuckyScore(1).Build();
+            var game = Create.Game.WithLuckyScore(1).Please();
             var player1 = new PlayerFake(1);
             var player2 = new PlayerFake(2);
             game.AddPlayer(player1);

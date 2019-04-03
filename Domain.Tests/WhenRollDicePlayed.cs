@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -7,24 +8,24 @@ namespace Domain.Tests
         [Fact]
         public void OnceThenDiceRolledOnce()
         {
-            var dice = new DiceMock(2);
-            var game = RollDiceGameBuilder.GetGame().WithDice(dice).Build();
+            var dice = Create.Dice.WithLuckyScore(2).Please();
+            var game = Create.Game.WithDice(dice).Please();
 
             game.Play();
 
-            Assert.Equal(1, dice.GetScoreRaiseCount);
+            dice.RollCount.Should().Be(1);
         }
         
         [Fact]
         public void TwiceThenDiceRolledTwice()
         {
-            var dice = new DiceMock(2);
-            var game = RollDiceGameBuilder.GetGame().WithDice(dice).Build();
+            var dice = Create.Dice.WithLuckyScore(2).Please();
+            var game = Create.Game.WithDice(dice).Please();
 
             game.Play();
             game.Play();
 
-            Assert.Equal(2, dice.GetScoreRaiseCount);
+            dice.RollCount.Should().Be(2);
         }
     }
 }

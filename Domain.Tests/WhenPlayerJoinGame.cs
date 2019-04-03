@@ -8,7 +8,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayerJoined()
         {
-            var player = PlayerBuilder.GetPlayer().Build();
+            var player = Create.Player.Please();
 
             player.Join(new RollDiceGame(new Dice()));
 
@@ -18,7 +18,7 @@ namespace Domain.Tests
         [Fact]
         public void AndPlayerInGameThenPlayerNotJoined()
         {
-            var player = PlayerBuilder.GetPlayer().InGame().Build();
+            var player = Create.Player.InGame().Please();
 
             Assert.Throws<InvalidOperationException>(() => player.Join(new RollDiceGame(new Dice())));
         }

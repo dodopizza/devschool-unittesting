@@ -7,7 +7,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenHeOwnChips()
         {
-            var player = PlayerBuilder.GetPlayer().Build();
+            var player = Create.Player.Please();
 
             player.Buy(new Chip(1));
 
@@ -17,7 +17,7 @@ namespace Domain.Tests
         [Fact]
         public void ThenPlayerHaveNotMoreAvailableChips()
         {
-            var player = PlayerBuilder.GetPlayer().Build();
+            var player = Create.Player.Please();
 
             player.Buy(new Chip(1));
 

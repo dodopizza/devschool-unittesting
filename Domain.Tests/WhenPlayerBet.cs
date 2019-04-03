@@ -8,7 +8,7 @@ namespace Domain.Tests
         public void ThenBetUpdated()
         {
             const int amount = 1;
-            var player = PlayerBuilder.GetPlayer().Build();
+            var player = Create.Player.Please();
             
             player.Bet(new Bet(new Chip(amount), 0));
 
