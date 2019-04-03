@@ -27,7 +27,7 @@ namespace Domain
 
         public void BuyChips(int amount)
         {
-            CurrentChipsAmount = amount;
+            CurrentChipsAmount += amount;
         }
     }
 }
