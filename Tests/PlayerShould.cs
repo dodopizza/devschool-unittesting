@@ -71,5 +71,16 @@ namespace Tests
             Assert.Equal(10, player.BetChips);
             Assert.Equal(2, player.BetScore);
         }
+
+        [Fact]
+        public void CanBetMoreChipsThenHave()
+        {
+            var player = new Player();
+            player.BuyChips(1);
+
+            Assert.Throws<Exception>(
+                () => player.Bet(2, 2)
+            );
+        }
     }
 }

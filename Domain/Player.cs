@@ -7,11 +7,11 @@ namespace Domain
         private bool _isInGame;
 
         public int Chips { get; private set; }
-        
+
         public bool IsInGame => _isInGame;
-        
+
         public int BetChips { get; private set; }
-        
+
         public int BetScore { get; private set; }
 
         public void JoinGame(Game game)
@@ -39,6 +39,10 @@ namespace Domain
 
         public void Bet(int chips, int score)
         {
+            if (Chips <= chips)
+            {
+                throw new Exception("Not enought Chips");
+            }
             BetChips = chips;
             BetScore = score;
         }
