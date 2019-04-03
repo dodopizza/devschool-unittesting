@@ -1,3 +1,4 @@
+using System;
 using Domain.Tests.DSL;
 using NUnit.Framework;
 
@@ -21,15 +22,22 @@ namespace Domain.Tests
             var player = Create.Player()
                 .WithChips(10)
                 .Please();
-            var game = Create.Game()
-                .With(player)
-                .Please();
 
             player.Bet(10, 3);
             
             Assert.AreEqual(0, player.Chips);
             Assert.AreEqual(10, player.CurrentBet.Amount);
             Assert.AreEqual(3, player.CurrentBet.Score);
+        }
+
+        [Test]
+        public void PlayerCantBetMoreChipsThanHeHas()
+        {
+            var player = Create.Player()
+                .WithChips(10)
+                .Please();
+
+            Assert.Throws<InvalidOperationException>(() => player.Bet(10 + 1, 3));
         }
     }
 }

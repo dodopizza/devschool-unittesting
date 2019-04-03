@@ -36,6 +36,11 @@ namespace Domain
 
         public void Bet(int chipCount, int score)
         {
+            if (chipCount > this.Chips)
+            {
+                throw new InvalidOperationException("Not enough chips for bet");
+            }
+            
             this.Chips -= chipCount;
             this.CurrentBet = new Bet(chipCount, score);
         }
