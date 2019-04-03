@@ -41,13 +41,12 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenBet_ThenBetIsRegistered()
         {
-            var player = Create.Player.InGame().Build();
+            var player = Create.Player.WithChips(1).InGame().Build();
 
-            player.Bet(1);
-            
+            player.Bet(1, 1);
+
             Assert.Equal(1, player.CurrentBet);
         }
-        
 
         [Fact]
         public void WhenBetMoreThanBought_ThenFail()
@@ -55,6 +54,18 @@ namespace JoyCasino.Tests
             var player = Create.Player.WithChips(1).Build();
 
             Assert.Throws<InvalidOperationException>(() => player.Bet(2));
+        }
+
+        [Fact]
+        public void WhenBetTwoTimes_ThenTwoBetsRegistered()
+        {
+            var player = Create.Player.InGame().WithChips(40).Build();
+            
+            player.Bet(10, 1);
+            player.Bet(20, 2);
+            
+            Assert.Equal(10, player.GetBetForScore(1));
+            Assert.Equal(20, player.GetBetForScore(2));
         }
     }
 }

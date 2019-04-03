@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace JoyCasino.Domain
 {
@@ -8,6 +9,12 @@ namespace JoyCasino.Domain
         
         public int ChipsAmount { get; set; }
         public int CurrentBet { get; set; }
+        private readonly Dictionary<int, int> _currentBetsByScore;
+
+        public Player()
+        {
+            _currentBetsByScore = new Dictionary<int, int>();
+        }
 
         public void JoinGame(Game game)
         {
@@ -24,12 +31,20 @@ namespace JoyCasino.Domain
             ChipsAmount += amount;
         }
 
-        public void Bet(int amount)
+        public void Bet(int amount, int score = default)
         {
             if (amount > ChipsAmount)
+            {
                 throw new InvalidOperationException();
+            }
                 
+            _currentBetsByScore[score] = amount;
             CurrentBet = amount;
+        }
+
+        public int GetBetForScore(int score)
+        {
+            return _currentBetsByScore[score];
         }
     }
 }
