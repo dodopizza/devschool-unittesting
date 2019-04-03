@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{165E85A4-2F60-466E-951C-0D69BCD10EEC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{5CD2574E-B73B-45E9-A187-72B249D46FA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoyCasino.Tests", "JoyCasino.Tests\JoyCasino.Tests.csproj", "{BD8FE51F-BF04-43B9-A687-E843C5A427D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{165E85A4-2F60-466E-951C-0D69BCD10EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{165E85A4-2F60-466E-951C-0D69BCD10EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{165E85A4-2F60-466E-951C-0D69BCD10EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{165E85A4-2F60-466E-951C-0D69BCD10EEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CD2574E-B73B-45E9-A187-72B249D46FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CD2574E-B73B-45E9-A187-72B249D46FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CD2574E-B73B-45E9-A187-72B249D46FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CD2574E-B73B-45E9-A187-72B249D46FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8FE51F-BF04-43B9-A687-E843C5A427D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8FE51F-BF04-43B9-A687-E843C5A427D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8FE51F-BF04-43B9-A687-E843C5A427D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8FE51F-BF04-43B9-A687-E843C5A427D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
