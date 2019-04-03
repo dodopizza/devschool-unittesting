@@ -32,6 +32,10 @@ namespace Domain
 
         public void Bet(int amount)
         {
+            if (amount > CurrentChipsAmount)
+                throw new InvalidOperationException();
+
+            CurrentChipsAmount -= amount;
             CurrentGame.Bet(this, amount);
         }
     }
