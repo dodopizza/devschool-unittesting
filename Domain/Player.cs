@@ -16,6 +16,7 @@ namespace Domain
         private Game Game { get; set; }
         
         private int Amount { get; set; }
+        public int CurrentBet { get; } = 5;
 
         public void Left()
         {
@@ -32,6 +33,11 @@ namespace Domain
         public bool HasChips(int amount)
         {
             return Amount >= amount;
+        }
+
+        public void Bet(int amount)
+        {
+            
         }
     }
 }
