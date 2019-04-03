@@ -10,5 +10,10 @@ namespace Domain
         {
             this.CurrentGame = game;
         }
+
+        public void Leave(Game game)
+        {
+            CurrentGame = null;
+        }
     }
 }
