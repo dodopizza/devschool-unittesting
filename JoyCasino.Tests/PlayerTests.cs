@@ -9,7 +9,7 @@ namespace JoyCasino.Tests
         public void WhenJoinsGame_ThenInGame()
         {
             var game = Create.Game.Build();
-            var player = Create.Player.InGame(game).Build();
+            var player = Create.Player.Build();
 
             player.JoinGame(game);
 
@@ -19,9 +19,8 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenLeaveGame_ThenNotInGame()
         {
-            var player = new Player();
-            var game = new Game();
-            player.JoinGame(game);
+            var game = Create.Game.Build();
+            var player = Create.Player.InGame(game).Build();
 
             player.LeaveGame(game);
 
