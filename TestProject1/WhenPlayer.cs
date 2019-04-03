@@ -7,25 +7,12 @@ namespace TestProject1
 {
     public class WhenPlayer
     {
-        private static Mock<IPlayer> GetPlayerMock()
-        {
-            var player = new Mock<IPlayer>();
-            return player;
-        }
-
-        private static RollDiceGame GetMockedGame(int value)
-        {
-            var scoreSource = new Mock<IScoreSource>();
-            scoreSource.Setup(source => source.GetScore()).Returns(value);
-            return new RollDiceGame(scoreSource.Object);
-        }
-
         [Fact]
         public void StartsGame_ItIsInGame()
         {
-            var player = new Player();
+            var player = Player.New();
 
-            player.Join(GetMockedGame(1));
+            player.Join(Game.WithRandomLuckyScore());
 
             Assert.True(player.IsInGame);
         }
@@ -33,19 +20,19 @@ namespace TestProject1
         [Fact]
         public void IsInGame_ItCanNotStartsGameAgain()
         {
-            var player = new Player();
-            player.Join(GetMockedGame(1));
+            var player = Player.InGame();
+
+            player.Join(Game.WithRandomLuckyScore());
 
             Assert.Throws<InvalidOperationException>(
-                () => player.Join(GetMockedGame(2))
+                () => player.Join(Game.WithRandomLuckyScore())
             );
         }
 
         [Fact]
         public void EndsGame_ItIsNoMoreInGame()
         {
-            var player = new Player();
-            player.Join(GetMockedGame(1));
+            var player = Player.InGame();
 
             player.LeaveGame();
 
@@ -55,7 +42,7 @@ namespace TestProject1
         [Fact]
         public void Buys10Chips_ItHasMoreThan5Chips()
         {
-            var player = new Player();
+            var player = Player.New();
 
             player.Buy(new Chip(10));
 
@@ -65,8 +52,8 @@ namespace TestProject1
         [Fact]
         public void MakeBet_ItHasCurrentBet()
         {
-            var player = new Player();
-            var bet = new Bet(new Chip(5), 13);
+            var player = Player.New();
+            var bet = Bet.New(5,13);
 
             player.Bet(bet);
 
@@ -76,11 +63,9 @@ namespace TestProject1
         [Fact]
         public void MakeBetAndLoose_ItHasNoCurrentBet()
         {
-            var player = new Player();
-            var bet = new Bet(new Chip(5), 13);
+            var player = Player.New().MakeBet(5, 13);
 
-            player.Bet(bet);
-            player.Lose();
+            player.Loose();
 
             Assert.Null(player.CurrentBet);
         }
@@ -88,7 +73,7 @@ namespace TestProject1
         [Fact]
         public void Wins_ItGetsChips()
         {
-            var player = new Player();
+            var player = Player.New().MakeBet(1, 1)
             var game = GetMockedGame(1);
             player.Join(game);
             var bet = new Bet(new Chip(1), 1);
@@ -136,7 +121,7 @@ namespace TestProject1
             var player = new Mock<IPlayer>();
             var game = GetMockedGame(1);
             game.AddPlayer(player.Object);
-            player.Setup(_ => _.CurrentBet).Returns(new Bet(new Chip(1), 1));
+            player.Setup(_ => _.CurrentBet).Returns(new Bet(new Chip(10), 1));
 
             game.Play();
 
@@ -153,7 +138,7 @@ namespace TestProject1
 
             game.Play();
 
-            player.Verify(_ => _.Lose(), Times.Once);
+            player.Verify(_ => _.Loose(), Times.Once);
         }
     }
 }
