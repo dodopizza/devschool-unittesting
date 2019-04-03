@@ -6,6 +6,8 @@ namespace Domain
     {
         public Game CurrentGame { get; private set; }
         
+        public int Chips { get; private set; }
+
         public void Join(Game game)
         {
             if (this.CurrentGame != null)
@@ -24,6 +26,11 @@ namespace Domain
             }
             
             this.CurrentGame = null;
+        }
+
+        public void BuyChips(int chipsCount)
+        {
+            this.Chips += chipsCount;
         }
     }
 }
