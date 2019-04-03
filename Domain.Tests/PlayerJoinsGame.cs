@@ -42,19 +42,13 @@ namespace Tests
         public void WhenThereAre6PlayersInThatGame_ThenThrowsException()
         {
             var game = new Game();
-            var player1 = new Player();
-            var player2 = new Player();
-            var player3 = new Player();
-            var player4 = new Player();
-            var player5 = new Player();
-            var player6 = new Player();
+            var sixPlayers = new[] {new Player(), new Player(), new Player(), new Player(), new Player(), new Player()};
+            foreach (var player in sixPlayers)
+            {
+                player.Join(game);
+            }
+            
             var player7 = new Player();
-            player1.Join(game);
-            player2.Join(game);
-            player3.Join(game);
-            player4.Join(game);
-            player5.Join(game);
-            player6.Join(game);
 
             Assert.Throws<InvalidOperationException>(() => player7.Join(game));
         }
