@@ -25,6 +25,7 @@ namespace Domain
             }
 
             this.CurrentGame = game;
+            game.AddPlayer(this);
         }
 
         public void LeaveGame()
@@ -33,7 +34,8 @@ namespace Domain
             {
                 throw new InvalidOperationException("Player already not in game");
             }
-            
+
+            this.CurrentGame.RemovePlayer(this);
             this.CurrentGame = null;
         }
 
@@ -56,6 +58,16 @@ namespace Domain
             
             this.Chips -= bet.Amount;
             this._currentBets.Add(bet);
+        }
+
+        public void WinChips(int betAmount)
+        {
+            this.Chips += betAmount;
+        }
+
+        public void ClearBets()
+        {
+            _currentBets.Clear();
         }
     }
 }
