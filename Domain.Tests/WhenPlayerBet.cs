@@ -1,4 +1,5 @@
 using Domain.Tests.Builders;
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -13,7 +14,7 @@ namespace Domain.Tests
             
             player.Bet(new Bet(new Chip(amount), 0));
 
-            Assert.Equal(amount, player.CurrentBet.Chips.Amount);
+            player.CurrentBet.Chips.Amount.Should().Be(amount);
         }
     }
 }

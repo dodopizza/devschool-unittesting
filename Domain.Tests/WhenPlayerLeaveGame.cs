@@ -1,5 +1,6 @@
 using System;
 using Domain.Tests.Builders;
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -13,7 +14,7 @@ namespace Domain.Tests
             
             player.LeaveGame();
 
-            Assert.False(player.IsInGame);
+            player.IsInGame.Should().BeFalse();
         }
         
         [Fact]

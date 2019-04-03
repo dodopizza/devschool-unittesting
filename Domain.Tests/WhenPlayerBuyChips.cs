@@ -1,4 +1,5 @@
 using Domain.Tests.Builders;
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -9,10 +10,11 @@ namespace Domain.Tests
         public void ThenHeOwnChips()
         {
             var player = Create.Player.Please();
+            var amount = 1;
+            
+            player.Buy(new Chip(amount));
 
-            player.Buy(new Chip(1));
-
-            Assert.True(player.Has(new Chip(1)));
+            player.Has(Create.Chip.WithAmount(amount).Please()).Should().BeTrue();
         }
         
         [Fact]
@@ -22,7 +24,7 @@ namespace Domain.Tests
 
             player.Buy(new Chip(1));
 
-            Assert.False(player.Has(new Chip(5)));
+            player.Has(Create.Chip.WithAmount(5).Please()).Should().BeFalse();
         }
     }
 }

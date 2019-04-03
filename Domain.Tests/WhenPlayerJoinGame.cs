@@ -1,5 +1,6 @@
 using System;
 using Domain.Tests.Builders;
+using FluentAssertions;
 using Xunit;
 
 namespace Domain.Tests
@@ -10,18 +11,20 @@ namespace Domain.Tests
         public void ThenPlayerJoined()
         {
             var player = Create.Player.Please();
+            var game = Create.Game.Please();
+            
+            player.Join(game);
 
-            player.Join(new RollDiceGame(new Dice()));
-
-            Assert.True(player.IsInGame);
+            player.IsInGame.Should().BeTrue();
         }
         
         [Fact]
         public void AndPlayerInGameThenPlayerNotJoined()
         {
             var player = Create.Player.InGame().Please();
-
-            Assert.Throws<InvalidOperationException>(() => player.Join(new RollDiceGame(new Dice())));
+            var game = Create.Game.Please();
+            
+            Assert.Throws<InvalidOperationException>(() => player.Join(game));
         }
     }
 }
