@@ -30,13 +30,13 @@ namespace Domain
             CurrentChipsAmount += amount;
         }
 
-        public void Bet(int amount)
+        public void Bet(Bet bet)
         {
-            if (amount > CurrentChipsAmount)
+            if (bet.Amount > CurrentChipsAmount)
                 throw new InvalidOperationException();
 
-            CurrentChipsAmount -= amount;
-            CurrentGame.Bet(this, amount);
+            CurrentChipsAmount -= bet.Amount;
+            CurrentGame.Bet(this, bet);
         }
     }
 }

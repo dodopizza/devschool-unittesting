@@ -13,9 +13,9 @@ namespace Tests
             var game = new Game();
             player.Join(game);
             player.BuyChips(11);
-            player.Bet(10);
+            player.Bet(10.BetOn(4));
 
-            Assert.IsTrue(game.BetByPlayer[player] == 10);
+            Assert.AreEqual(10.BetOn(4), game.BetByPlayer[player][0]);
         }
         
         [Test]
@@ -25,7 +25,7 @@ namespace Tests
             var game = new Game();
             player.Join(game);
             player.BuyChips(11);
-            player.Bet(10);
+            player.Bet(10.BetOn(5));
 
             Assert.AreEqual(1, player.CurrentChipsAmount);
         }
@@ -38,7 +38,7 @@ namespace Tests
             player.Join(game);
             player.BuyChips(9);
 
-            Assert.Throws<InvalidOperationException>(() => player.Bet(10));
+            Assert.Throws<InvalidOperationException>(() => player.Bet(10.BetOn(1)));
         }
     }
 }
