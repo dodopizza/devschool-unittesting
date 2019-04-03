@@ -7,6 +7,7 @@ namespace Domain
         Bet CurrentBet { get; }
         void Win(int chipsAmount);
         void Lose();
+        void Bet(Bet bet);
     }
 
     public class Player : IPlayer

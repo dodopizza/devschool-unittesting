@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Moq;
 
@@ -6,20 +7,30 @@ namespace Domain.Tests
     public class GameBuilder
     {
         private int _playerAmount;
-        private Bet[] _bets = {};
+        private IPlayer[] _players = { };
+        private Bet[] _bets = { };
         private IDieRoller _dieRoller = new RandomDieRoller();
 
         public RollDiceGame Please()
         {
             var game = new RollDiceGame(_dieRoller);
-            for (int i = 0; i < _playerAmount; i++)
+            for (int i = 0; i < Math.Max(_playerAmount, _players.Length); i++)
             {
-                var player = new Player();
+                IPlayer player;
+                if (i < _players.Length)
+                {
+                    player = _players[i];
+                }
+                else
+                {
+                    player = new Player();
+                }
+
                 if (i < _bets.Length)
                 {
                     player.Bet(_bets[i]);
                 }
-                        
+
                 game.AddPlayer(player);
             }
 
@@ -31,7 +42,7 @@ namespace Domain.Tests
             _playerAmount = 6;
             return this;
         }
-            
+
         public GameBuilder WithANumberOfPlayers(int number)
         {
             _playerAmount = number;
@@ -55,6 +66,12 @@ namespace Domain.Tests
             var mock = new Mock<IDieRoller>();
             mock.Setup((roller) => roller.RollDice()).Returns(roll);
             _dieRoller = mock.Object;
+            return this;
+        }
+
+        public GameBuilder WithPlayers(params IPlayer[] players)
+        {
+            _players = players;
             return this;
         }
     }

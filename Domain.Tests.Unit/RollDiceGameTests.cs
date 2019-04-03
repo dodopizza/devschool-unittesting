@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -15,7 +17,7 @@ namespace Domain.Tests
             return mock.Object;
         }
 
-        private Mock<IPlayer> CreatePlayerWithBet(Bet bet)
+        private Mock<IPlayer> CreatePlayerMockWithBet(Bet bet)
         {
             var mock = new Mock<IPlayer>();
             mock.Setup(p => p.CurrentBet).Returns(bet);
@@ -25,10 +27,11 @@ namespace Domain.Tests
         [Test]
         public void GameIsPlayed_WhenPlayerBetsOnLuckyScore_ThenPlayerWins()
         {
-            var playerMock = CreatePlayerWithBet(AnyAmountOfChips.BetOn(5));
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            game.AddPlayer(playerMock.Object);
+            var playerMock = CreatePlayerMockWithBet(AnyAmountOfChips.BetOn(5));
+            var game = Create.Game()
+                .WithLuckyRoll(5)
+                .WithPlayers(playerMock.Object)
+                .Please();
 
             game.Play();
 
@@ -38,10 +41,11 @@ namespace Domain.Tests
         [Test]
         public void GameIsPlayed_WhenPlayerBetsOnUnluckyScore_ThenPlayerLoses()
         {
-            var playerMock = CreatePlayerWithBet(AnyAmountOfChips.BetOn(4));
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            game.AddPlayer(playerMock.Object);
+            var playerMock = CreatePlayerMockWithBet(AnyAmountOfChips.BetOn(4));
+            var game = Create.Game()
+                .WithLuckyRoll(5)
+                .WithPlayers(playerMock.Object)
+                .Please();
 
             game.Play();
 
@@ -51,11 +55,13 @@ namespace Domain.Tests
         [Test]
         public void GameIsPlayed_WhenPlayerBetsOnUnluckyScore_ThenPlayerDoesntGainMoney()
         {
-            var player = new Player();
-            player.Bet(AnyAmountOfChips.BetOn(4));
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            game.AddPlayer(player);
+            var player = Create.Player()
+                .WithBetOn(4)
+                .Please();
+            var game = Create.Game()
+                .WithPlayers(player)
+                .WithLuckyRoll(5)
+                .Please();
 
             game.Play();
 
@@ -65,11 +71,13 @@ namespace Domain.Tests
         [Test]
         public void GameIsPlayed_WhenPlayerBets15ChipsOnLuckyScore_ThenPlayerGains15xWinFactorChips()
         {
-            var player = new Player();
-            player.Bet(15.Chips().BetOn(5));
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            game.AddPlayer(player);
+            var player = Create.Player()
+                .WithBet(15.Chips().BetOn(5))
+                .Please();
+            var game = Create.Game()
+                .WithPlayers(player)
+                .WithLuckyRoll(5)
+                .Please();
 
             game.Play();
 

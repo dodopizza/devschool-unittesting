@@ -6,10 +6,15 @@ namespace Domain.Tests
         {
             return new GameBuilder();
         }
-            
+
         public static BetBuilder Bet()
         {
             return new BetBuilder();
+        }
+
+        public static PlayerBuilder Player()
+        {
+            return new PlayerBuilder();
         }
     }
 }
