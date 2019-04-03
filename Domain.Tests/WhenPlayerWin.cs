@@ -1,3 +1,4 @@
+using Domain.Tests.Builders;
 using FluentAssertions;
 using Xunit;
 

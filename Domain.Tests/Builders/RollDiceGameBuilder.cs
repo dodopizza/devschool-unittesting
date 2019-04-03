@@ -1,7 +1,8 @@
 using System.Linq;
+using Domain.Tests.Fakes;
 using Moq;
 
-namespace Domain.Tests
+namespace Domain.Tests.Builders
 {
     public class RollDiceGameBuilder
     {
@@ -48,23 +49,5 @@ namespace Domain.Tests
         private int? Score { get; set; }
 
         private IDice Dice { get; set; }
-    }
-
-    public class DiceMock : IDice
-    {
-        private int Score { get; }
-        
-        public int RollCount { get; private set; }
-
-        public DiceMock(int score)
-        {
-            Score = score;
-        }
-
-        public int GetScore()
-        {
-            RollCount++;
-            return Score;
-        }
     }
 }

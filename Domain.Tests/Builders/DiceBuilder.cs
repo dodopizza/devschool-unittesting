@@ -1,4 +1,6 @@
-namespace Domain.Tests
+using Domain.Tests.Fakes;
+
+namespace Domain.Tests.Builders
 {
     public class DiceBuilder
     {

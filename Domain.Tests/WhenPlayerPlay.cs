@@ -1,3 +1,5 @@
+using Domain.Tests.Builders;
+using Domain.Tests.Fakes;
 using Xunit;
 
 namespace Domain.Tests
@@ -30,8 +32,8 @@ namespace Domain.Tests
         public void AndTheyWinThenPlayerAckAboutWin()
         {
             var game = Create.Game.WithLuckyScore(1).Please();
-            var player1 = new PlayerFake(1);
-            var player2 = new PlayerFake(1);
+            var player1 = new PlayerMock(1);
+            var player2 = new PlayerMock(1);
             game.AddPlayer(player1);
             game.AddPlayer(player2);
 
@@ -48,8 +50,8 @@ namespace Domain.Tests
         public void AndTheyLoseThenPlayerAckAboutLose()
         {
             var game = Create.Game.WithLuckyScore(1).Please();
-            var player1 = new PlayerFake(2);
-            var player2 = new PlayerFake(2);
+            var player1 = new PlayerMock(2);
+            var player2 = new PlayerMock(2);
             game.AddPlayer(player1);
             game.AddPlayer(player2);
 
@@ -66,8 +68,8 @@ namespace Domain.Tests
         public void ThenPlayersAckAboutWinAndLose()
         {
             var game = Create.Game.WithLuckyScore(1).Please();
-            var player1 = new PlayerFake(1);
-            var player2 = new PlayerFake(2);
+            var player1 = new PlayerMock(1);
+            var player2 = new PlayerMock(2);
             game.AddPlayer(player1);
             game.AddPlayer(player2);
 

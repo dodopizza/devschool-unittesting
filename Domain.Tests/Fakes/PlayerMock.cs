@@ -1,8 +1,8 @@
-namespace Domain.Tests
+namespace Domain.Tests.Fakes
 {
-    public class PlayerFake : IPlayer
+    public class PlayerMock : IPlayer
     {
-        public PlayerFake(int score)
+        public PlayerMock(int score)
         {
             CurrentBet = new Bet(new Chip(1), score);
         }

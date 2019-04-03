@@ -1,4 +1,5 @@
 using System;
+using Domain.Tests.Builders;
 using Xunit;
 
 namespace Domain.Tests
