@@ -47,5 +47,15 @@ namespace Tests
 
             Assert.Throws<Exception>(() => player.JoinGame(game2));
         }
+
+        [Fact]
+        public void CanBuyChips()
+        {
+            var player = new Player();
+
+            player.BuyChips(1);
+
+            Assert.Equal(1, player.Chips);
+        }
     }
 }

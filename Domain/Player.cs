@@ -6,6 +6,8 @@ namespace Domain
     {
         private bool _isInGame;
 
+        public int Chips { get; private set; }
+
         public void JoinGame(Game game)
         {
             if (_isInGame)
@@ -24,6 +26,11 @@ namespace Domain
                 throw new Exception("Cant leave because game not started");
             }
             _isInGame = false;
+        }
+
+        public void BuyChips(int count)
+        {
+            Chips += count;
         }
     }
 }
