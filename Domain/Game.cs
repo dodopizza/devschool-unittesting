@@ -13,5 +13,10 @@ namespace Domain
 
             _numberOfPlayers++;
         }
+        
+        public void RemovePlayer()
+        {
+            _numberOfPlayers--;
+        }
     }
 }

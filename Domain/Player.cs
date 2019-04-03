@@ -20,6 +20,7 @@ namespace Domain
             if (CurrentGame == null)
                 throw new InvalidOperationException();
 
+            CurrentGame.RemovePlayer();
             CurrentGame = null;
         }
     }

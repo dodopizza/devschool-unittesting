@@ -16,7 +16,7 @@ namespace Tests
 
             Assert.AreEqual(game, player.CurrentGame);
         }
-        
+
         [Test]
         public void WhenAlreadyInADifferentGame_ThenThrowsException()
         {
@@ -27,7 +27,7 @@ namespace Tests
 
             Assert.Throws<InvalidOperationException>(() => player.Join(otherGame));
         }
-        
+
         [Test]
         public void WhenAlreadyInThatGame_ThenThrowsException()
         {
@@ -47,10 +47,27 @@ namespace Tests
             {
                 player.Join(game);
             }
-            
+
             var player7 = new Player();
 
             Assert.Throws<InvalidOperationException>(() => player7.Join(game));
+        }
+        
+        [Test]
+        public void WhenThereWere6PlayersInThatGameAndOneLeft_ThenJoinSuccessfully()
+        {
+            var game = new Game();
+            var sixPlayers = new[] {new Player(), new Player(), new Player(), new Player(), new Player(), new Player()};
+            foreach (var player in sixPlayers)
+            {
+                player.Join(game);
+            }
+            sixPlayers[0].LeaveCurrentGame();
+
+            var player7 = new Player();
+            player7.Join(game);
+
+            Assert.AreEqual(game, player7.CurrentGame);
         }
     }
 }
