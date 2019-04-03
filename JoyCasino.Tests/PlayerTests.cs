@@ -26,5 +26,15 @@ namespace JoyCasino.Tests
 
             Assert.False(player.IsInGame);
         }
+
+        [Fact]
+        public void WhenBuysChips_ThenHasChips()
+        {
+            var player = Create.Player.Build();
+
+            player.BuyChips(1);
+
+            Assert.Equal(1, player.ChipsAmount);
+        }
     }
 }
