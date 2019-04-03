@@ -1,5 +1,5 @@
-using System;
 using Domain.Dice;
+using Domain.Tests.Dsl;
 using Moq;
 using NUnit.Framework;
 
@@ -10,13 +10,9 @@ namespace Domain.Tests
         [Test]
         public void PlayerWins_WhenBetOnLuckyScore()
         {
-            var mockDice = new Mock<IDice>();
-            mockDice.Setup(x => x.GetScore()).Returns(5);
-            var game = new RollDiceGame(mockDice.Object);
-            var player = new Player();
-            player.Join(game);
-            player.Bet(new Bet(new Chip(1), 5));
-
+            var player = Create.Player().WithBet(1, 5);
+            var game = Create.GameWithStaticDice(5).WithPlayer(player);
+            
             game.Play();
 
             Assert.True(player.Has(new Chip(6)));
@@ -25,9 +21,7 @@ namespace Domain.Tests
         [Test]
         public void SomePlayerWins_WhenLuckyScoreRolled()
         {
-            var mockDice = new Mock<IDice>();
-            mockDice.Setup(x => x.GetScore()).Returns(5);
-            var game = new RollDiceGame(mockDice.Object);
+            var game = Create.GameWithStaticDice(5);
 
             var winnerMock = GetPlayerWithScore(5);
             var loserMock = GetPlayerWithScore(6);

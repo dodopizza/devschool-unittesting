@@ -32,7 +32,7 @@ namespace Domain
         public void Play()
         {
             var rollCount = _dice.GetScore();
-            
+
             int luckyScore;
             var i = 0;
             do

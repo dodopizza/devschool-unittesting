@@ -1,10 +1,30 @@
+using Domain.Dice;
+using Moq;
+
 namespace Domain.Tests.Dsl
 {
     public static class Create
     {
-        public static RollDiceGame Game()
+        public static RollDiceGame Game(IDice mockDiceObject = default)
         {
-            return new RollDiceGame(new Dice.Dice());
+            return new RollDiceGame(mockDiceObject ?? new Dice.Dice());
+        }
+
+        public static RollDiceGame GameWithStaticDice(int score)
+        {
+            var mockDice = new Mock<IDice>();
+            mockDice.Setup(x => x.GetScore()).Returns(score);
+
+            var game = new RollDiceGame(mockDice.Object);
+
+            return game;
+        }
+
+        public static RollDiceGame WithPlayer(this RollDiceGame game, Player player)
+        {
+            game.AddPlayer(player);
+
+            return game;
         }
 
         public static Player Player()
@@ -26,14 +46,14 @@ namespace Domain.Tests.Dsl
             return new Chip(amount);
         }
 
-        public static Bet Bet()
+        public static Bet Bet(int chipAmount = default, int score = default)
         {
-            return new Bet(new Chip(1), 1);
+            return new Bet(Chip(chipAmount), score);
         }
 
-        public static Player WithBet(this Player player)
+        public static Player WithBet(this Player player, int chipAmount, int score)
         {
-            player.Bet(Bet());
+            player.Bet(Bet(chipAmount, score));
 
             return player;
         }
