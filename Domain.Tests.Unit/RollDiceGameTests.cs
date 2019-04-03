@@ -76,15 +76,19 @@ namespace Domain.Tests
             Assert.AreEqual(15 * RollDiceGame.WinFactor, player.AvailableChipsAmount);
         }
 
+
+        [Test]
+        public void MaximumAmountOfPlayersIs6()
+        {
+            Assert.AreEqual(6, RollDiceGame.MaxPlayers);
+        }
+
         [Test]
         public void GameAddsPlayer_WhenAlreadyHasMaximumAmountOfPlayers_ThenThrowError()
         {
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            for (int i = 0; i < RollDiceGame.MaxPlayers; i++)
-            {
-                game.AddPlayer(new Player());
-            }
+            var game = Create.Game()
+                .WithMaximumAmountOfPlayers()
+                .Please();
 
             Assert.Throws<TooManyPlayersException>(() => game.AddPlayer(new Player()));
         }
@@ -92,26 +96,103 @@ namespace Domain.Tests
         [Test]
         public void GamePlay_WhenMultiplePlayersParticipate_ThenAllPlayersBetsAreEmptied()
         {
-            var roller = CreateDieRoller(5);
-            var game = new RollDiceGame(roller);
-            var playerOne = new Player();
-            playerOne.Bet(AnyAmountOfChips.BetOn(4));
-            var playerTwo = new Player();
-            playerTwo.Bet(AnyAmountOfChips.BetOn(5));
-            var playerThree = new Player();
-            playerThree.Bet(AnyAmountOfChips.BetOn(5));
-            game.AddPlayer(playerOne);
-            game.AddPlayer(playerTwo);
-            game.AddPlayer(playerThree);
+            var game = Create.Game()
+                .WithANumberOfPlayers(3)
+                .WithPlayerBets(
+                    Create.Bet().On(4).Please(),
+                    Create.Bet().On(4).Please(),
+                    Create.Bet().On(5).Please()
+                )
+                .WithLuckyRoll(5)
+                .Please();
 
             game.Play();
 
             Assert.Multiple(() =>
             {
-                Assert.Null(playerOne.CurrentBet);
-                Assert.Null(playerTwo.CurrentBet);
-                Assert.Null(playerThree.CurrentBet);
+                Assert.Null(game.Players[0].CurrentBet);
+                Assert.Null(game.Players[1].CurrentBet);
+                Assert.Null(game.Players[2].CurrentBet);
             });
+        }
+
+        public static class Create
+        {
+            public static GameBuilder Game()
+            {
+                return new GameBuilder();
+            }
+            
+            public static BetBuilder Bet()
+            {
+                return new BetBuilder();
+            }
+       }
+
+        public class GameBuilder
+        {
+            private int _playerAmount;
+            private Bet[] _bets = {};
+            private IDieRoller _dieRoller = new RandomDieRoller();
+
+            public RollDiceGame Please()
+            {
+                var game = new RollDiceGame(_dieRoller);
+                for (int i = 0; i < _playerAmount; i++)
+                {
+                    var player = new Player();
+                    if (i < _bets.Length)
+                    {
+                        player.Bet(_bets[i]);
+                    }
+                        
+                    game.AddPlayer(player);
+                }
+
+                return game;
+            }
+
+            public GameBuilder WithMaximumAmountOfPlayers()
+            {
+                _playerAmount = 6;
+                return this;
+            }
+            
+            public GameBuilder WithANumberOfPlayers(int number)
+            {
+                _playerAmount = number;
+                return this;
+            }
+
+            public GameBuilder WithPlayerBets(params Bet[] bets)
+            {
+                _bets = bets;
+                return this;
+            }
+
+            public GameBuilder WithLuckyRoll(int roll)
+            {
+                var mock = new Mock<IDieRoller>();
+                mock.Setup((roller) => roller.RollDice()).Returns(roll);
+                _dieRoller = mock.Object;
+                return this;
+            }
+        }
+    }
+
+    public class BetBuilder
+    {
+        private int _chipsAmount = 1;
+        private int _score = 1;
+        public Bet Please()
+        {
+            return _chipsAmount.Chips().BetOn(_score);
+        }
+
+        public BetBuilder On(int score)
+        {
+            _score = score;
+            return this;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Domain
         private readonly IDieRoller _dieRoller;
         private readonly List<IPlayer> players = new List<IPlayer>();
         public const int MaxPlayers = 6; 
-        public const int WinFactor = 6; 
+        public const int WinFactor = 6;
+        public IReadOnlyList<IPlayer> Players => players;
 
         public RollDiceGame(IDieRoller dieRoller)
         {

@@ -2,7 +2,7 @@ using System;
 
 namespace Domain
 {
-    class RandomDieRoller : IDieRoller
+    public class RandomDieRoller : IDieRoller
     {
         public int RollDice()
         {
