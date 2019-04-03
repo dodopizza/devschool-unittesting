@@ -23,7 +23,7 @@ namespace Domain.Tests
                 .WithChips(10)
                 .Please();
 
-            player.Bet(10, 3);
+            player.Bet(new Bet(10, 3));
             
             Assert.AreEqual(10, player.GetBetAmount(3));
         }
@@ -34,8 +34,11 @@ namespace Domain.Tests
             var player = Create.Player()
                 .WithChips(10)
                 .Please();
+            
+            var bet = new Bet(10 + 1, 3);
 
-            Assert.Throws<InvalidOperationException>(() => player.Bet(10 + 1, 3));
+
+            Assert.Throws<InvalidOperationException>(() => player.Bet(bet));
         }
 
         [Test]
@@ -45,8 +48,8 @@ namespace Domain.Tests
                 .WithChips(15)
                 .Please();
 
-            player.Bet(10, 3);
-            player.Bet(5, 4);
+            player.Bet(new Bet(10, 3));
+            player.Bet(new Bet(5, 4));
 
             Assert.AreEqual(10, player.GetBetAmount(3));
             Assert.AreEqual(5, player.GetBetAmount(4));
@@ -59,8 +62,8 @@ namespace Domain.Tests
                 .WithChips(15)
                 .Please();
             
-            player.Bet(10, 3);
-            player.Bet(5, 3);
+            player.Bet(new Bet(10, 3));
+            player.Bet(new Bet(5, 3));
             
             Assert.AreEqual(15, player.GetBetAmount(3));
         }
@@ -77,7 +80,9 @@ namespace Domain.Tests
                 .WithChips(betCount)
                 .Please();
 
-            player.Bet(betCount, 1);
+            var bet = new Bet(betCount, 1);
+            
+            player.Bet(bet);
         }
         
         [Test]
@@ -92,7 +97,9 @@ namespace Domain.Tests
                 .WithChips(betCount)
                 .Please();
 
-            Assert.Throws<InvalidOperationException>(() => player.Bet(betCount, 1));
+            var bet = new Bet(betCount, 1);
+            
+            Assert.Throws<InvalidOperationException>(() => player.Bet(bet));
         }
     }
 }

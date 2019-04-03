@@ -42,20 +42,20 @@ namespace Domain
             this.Chips += chipsCount;
         }
 
-        public void Bet(int chipCount, int score)
+        public void Bet(Bet bet)
         {
-            if (chipCount % 5 != 0)
+            if (bet.Amount % 5 != 0)
             {
                 throw new InvalidOperationException("Can only bet multiple of 5");
             }
 
-            if (chipCount > this.Chips)
+            if (bet.Amount > this.Chips)
             {
                 throw new InvalidOperationException("Not enough chips for bet");
             }
             
-            this.Chips -= chipCount;
-            this._currentBets.Add(new Bet(chipCount, score));
+            this.Chips -= bet.Amount;
+            this._currentBets.Add(bet);
         }
     }
 }

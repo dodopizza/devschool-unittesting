@@ -18,5 +18,10 @@ namespace Domain.Tests.DSL
             _players.Add(player);
             return this;
         }
+
+        public GameBuilder WithLuckyScore(int luckyScore)
+        {
+            return this;
+        }
     }
 }
