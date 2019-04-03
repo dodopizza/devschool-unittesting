@@ -9,6 +9,7 @@ namespace JoyCasino.Domain
 
         public bool IsInGame { get; private set; }
         public int ChipsAmount { get; private set; }
+        public bool IsLoser { get; set; }
 
         public Player()
         {
@@ -17,6 +18,7 @@ namespace JoyCasino.Domain
 
         public void JoinGame(Game game)
         {
+            game.AddPlayer(this);
             IsInGame = true;
         }
 

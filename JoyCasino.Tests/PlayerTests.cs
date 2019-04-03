@@ -66,5 +66,17 @@ namespace JoyCasino.Tests
             Assert.Equal(10, player.GetBetForScore(1));
             Assert.Equal(20, player.GetBetForScore(2));
         }
+        
+        [Fact]
+        public void WhenMakeWrongBet_ThenLose()
+        {
+            var game = Create.Game.Build();
+            var player = Create.Player.InGame(game).WithChips(10).Build();
+            player.Bet(10, 1);
+
+            game.Play(2);
+            
+            Assert.True(player.IsLoser);
+        }
     }
 }
