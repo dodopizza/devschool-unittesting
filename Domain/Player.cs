@@ -1,3 +1,5 @@
+using System;
+
 namespace Domain
 {
     public class Player
@@ -11,6 +13,9 @@ namespace Domain
 
         public void LeaveCurrentGame()
         {
+            if (CurrentGame == null)
+                throw new InvalidOperationException();
+
             CurrentGame = null;
         }
     }
