@@ -14,18 +14,4 @@ namespace Domain.Tests
             Assert.True(player.HasChips(5));
         }
     }
-
-    public class WhenPlayerBetInGame
-    {
-        [Fact]
-        public void ThenPlayerBetAccepted()
-        {
-            var player = Create.Player.Please;
-            
-            player.Bet(5);
-            
-            Assert.Equal(5, player.CurrentBet);
-        }
-        
-    }
 }

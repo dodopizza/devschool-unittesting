@@ -16,7 +16,7 @@ namespace Domain
         private Game Game { get; set; }
         
         private int Amount { get; set; }
-        public int CurrentBet { get; } = 5;
+        public int CurrentBet { get; private set; }
 
         public void Left()
         {
@@ -37,7 +37,7 @@ namespace Domain
 
         public void Bet(int amount)
         {
-            
+            CurrentBet = amount;
         }
     }
 }
