@@ -10,6 +10,7 @@ namespace Domain
                 throw new InvalidOperationException();
 
             CurrentGame = game;
+            game.AddPlayer();
         }
 
         public Game CurrentGame { get; private set; }
