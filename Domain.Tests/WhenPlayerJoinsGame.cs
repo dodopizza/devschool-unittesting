@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace Domain.Tests
@@ -26,6 +27,14 @@ namespace Domain.Tests
             player.Left();
             
             Assert.False(player.InGame);
+        }        
+        
+        [Fact]
+        public void AndPlayerNotInGameThenPlayerCantLeave()
+        {
+            var player = Create.Player.Please;
+
+            Assert.Throws<InvalidOperationException>(() => player.Left());
         }
     }
 }

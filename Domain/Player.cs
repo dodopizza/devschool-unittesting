@@ -1,3 +1,5 @@
+using System;
+
 namespace Domain
 {
     public class Player
@@ -12,6 +14,8 @@ namespace Domain
 
         public void Left()
         {
+            if (!InGame) throw new InvalidOperationException();
+
             Game = null;
         }
     }
