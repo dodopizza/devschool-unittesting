@@ -1,4 +1,3 @@
-using System;
 using JoyCasino.Domain;
 using Xunit;
 
@@ -9,8 +8,8 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenJoinsGame_ThenInGame()
         {
-            var player = new Player();
-            var game = new Game();
+            var game = Create.Game.Build();
+            var player = Create.Player.InGame(game).Build();
 
             player.JoinGame(game);
 
