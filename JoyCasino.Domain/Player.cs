@@ -8,5 +8,10 @@ namespace JoyCasino.Domain
         {
             IsInGame = true;
         }
+
+        public void LeaveGame(Game game)
+        {
+            IsInGame = false;
+        }
     }
 }

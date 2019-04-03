@@ -13,8 +13,20 @@ namespace JoyCasino.Tests
             var game = new Game();
 
             player.JoinGame(game);
-            
+
             Assert.True(player.IsInGame);
+        }
+
+        [Fact]
+        public void WhenLeaveGame_ThenNotInGame()
+        {
+            var player = new Player();
+            var game = new Game();
+            player.JoinGame(game);
+
+            player.LeaveGame(game);
+
+            Assert.False(player.IsInGame);
         }
     }
 }
