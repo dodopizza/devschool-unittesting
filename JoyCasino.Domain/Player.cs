@@ -32,6 +32,11 @@ namespace JoyCasino.Domain
             ChipsAmount += amount;
         }
 
+        public void Bet(Bet bet)
+        {
+            Bet(bet.ChipAmount, bet.Score);
+        }
+
         public void Bet(int amount, int score)
         {
             if (amount > ChipsAmount)

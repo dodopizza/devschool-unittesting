@@ -9,7 +9,7 @@ namespace JoyCasino.Tests
         public void WhenJoinsGame_ThenInGame()
         {
             var game = Create.Game.Build();
-            var player = Create.Player.Build();
+            var player = Create.Player.InGame(game).Build();
 
             player.JoinGame(game);
 
@@ -30,7 +30,7 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenBuysChips_ThenHasChips()
         {
-            var player = Create.Player.Build();
+            var player = Create.Player.InGame().Build();
 
             player.BuyChips(1);
 
@@ -50,7 +50,7 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenBetMoreThanBought_ThenFail()
         {
-            var player = Create.Player.WithChips(10).Build();
+            var player = Create.Player.InGame().WithChips(10).Build();
 
             Assert.Throws<InvalidOperationException>(() => player.Bet(20, 1));
         }
@@ -71,8 +71,11 @@ namespace JoyCasino.Tests
         public void WhenMakeWrongBet_ThenLose()
         {
             var game = Create.Game.Build();
-            var player = Create.Player.InGame(game).WithChips(10).Build();
-            player.Bet(10, 1);
+            var player = Create.Player
+                .InGame(game)
+                .WithChips(100)
+                .WithBet(10, 1)
+                .Build();
 
             game.Play(2);
             
