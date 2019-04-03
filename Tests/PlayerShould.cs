@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Domain;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Tests
 {
@@ -22,6 +23,8 @@ namespace Tests
         public void LeaveGame()
         {
             var player = new Player();
+            var game = new Game();
+            player.JoinGame(game);
 
             player.LeaveGame();
 
@@ -56,6 +59,17 @@ namespace Tests
             player.BuyChips(1);
 
             Assert.Equal(1, player.Chips);
+        }
+
+        [Fact]
+        public void CanBet()
+        {
+            var player = new Player();
+
+            player.Bet(10, 2);
+
+            Assert.Equal(10, player.BetChips);
+            Assert.Equal(2, player.BetScore);
         }
     }
 }

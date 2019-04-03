@@ -7,6 +7,12 @@ namespace Domain
         private bool _isInGame;
 
         public int Chips { get; private set; }
+        
+        public bool IsInGame => _isInGame;
+        
+        public int BetChips { get; private set; }
+        
+        public int BetScore { get; private set; }
 
         public void JoinGame(Game game)
         {
@@ -16,8 +22,6 @@ namespace Domain
             }
             _isInGame = true;
         }
-
-        public bool IsInGame => _isInGame;
 
         public void LeaveGame()
         {
@@ -31,6 +35,12 @@ namespace Domain
         public void BuyChips(int count)
         {
             Chips += count;
+        }
+
+        public void Bet(int chips, int score)
+        {
+            BetChips = chips;
+            BetScore = score;
         }
     }
 }
