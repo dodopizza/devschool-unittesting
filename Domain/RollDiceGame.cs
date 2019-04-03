@@ -13,6 +13,7 @@ namespace Domain
         }
         
         private List<Player> players = new List<Player>();
+        public IReadOnlyList<Player> Players => players;
 
         public void AddPlayer(Player player)
         {

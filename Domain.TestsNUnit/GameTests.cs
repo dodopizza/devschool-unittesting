@@ -1,4 +1,5 @@
 using Domain;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -28,11 +29,16 @@ namespace Tests
         [Test]
         public void WhenPlayerWin_ShouldIncreaseChips6Times()
         {
-            _player.Bet(new Bet(new Chip(10), LuckyScore));
+            var game = Create.Game()
+                .WithLuckyRoll(3)
+                .WithPlayerBets(
+                    Create.Bet().WithChips(10).On(3).Please()
+                )
+                .Please();
             
-            _game.Play();
-            
-            Assert.True(_player.Has(new Chip(6 * 10)));
+            game.Play();
+    
+            Assert.True(game.Players[0].Has(new Chip(6 * 10)));
         }
         
         [Test]
