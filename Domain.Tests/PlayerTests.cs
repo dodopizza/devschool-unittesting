@@ -1,19 +1,15 @@
 using System;
+using Domain.Tests.Dsl;
 using NUnit.Framework;
 
 namespace Domain.Tests
 {
     public class PlayerTests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void IsNotInGame_WhenNew()
         {
-            var player = CreatePlayer();
+            var player = Create.Player();
 
             Assert.False(player.IsInGame);
         }
@@ -21,8 +17,8 @@ namespace Domain.Tests
         [Test]
         public void CanJoinGame_WhenNotInGame()
         {
-            var game = new RollDiceGame(new Dice.Dice());
-            var player = CreatePlayer();
+            var game = Create.Game();
+            var player = Create.Player();
 
             player.Join(game);
 
@@ -32,9 +28,7 @@ namespace Domain.Tests
         [Test]
         public void CanLeaveGame_WhenInGame()
         {
-            var game = CreateRollDiceGame();
-            var player = CreatePlayer();
-            player.Join(game);
+            var player = Create.Player().InGame();
 
             player.LeaveGame();
 
@@ -44,24 +38,20 @@ namespace Domain.Tests
         [Test]
         public void FailsToJoinGame_WhenInGame()
         {
-            var game = CreateRollDiceGame();
-            var player = CreatePlayer();
+            var game = Create.Game();
+
+            var player = Create.Player();
+
             player.Join(game);
 
             Assert.Throws<InvalidOperationException>(() => player.Join(game));
         }
 
-        private static RollDiceGame CreateRollDiceGame()
-        {
-            var game = new RollDiceGame(new Dice.Dice());
-            return game;
-        }
-
         [Test]
         public void HasChips_WhenBuyChips()
         {
-            var chip = CreateChip(10);
-            var player = CreatePlayer();
+            var chip = Create.Chip();
+            var player = Create.Player();
 
             player.Buy(chip);
 
@@ -71,47 +61,22 @@ namespace Domain.Tests
         [Test]
         public void CurrentBetIsSet_WhenBet()
         {
-            var bet = CreateBet(1, 2);
-            var player = CreatePlayer();
-            player.Buy(CreateChip(1));
+            var player = Create.Player().WithChips();
+            var bet = Create.Bet();
 
             player.Bet(bet);
 
             Assert.AreEqual(bet, player.CurrentBet);
         }
 
-        private static Player CreatePlayer()
-        {
-            var player = new Player();
-            return player;
-        }
-
-        private static Bet CreateBet(int amount, int score)
-        {
-            var chip = CreateChip(amount);
-            var bet = new Bet(chip, score);
-            return bet;
-        }
-
-        private static Chip CreateChip(int amount)
-        {
-            var chip = new Chip(amount);
-            return chip;
-        }
-
         [Test]
         public void ChipsAmountAdded_WhenWins()
         {
-            var player = CreatePlayer();
+            var player = Create.Player();
 
             player.Win(10);
 
             Assert.True(player.Has(new Chip(10)));
-        }
-
-        [Test]
-        public void CurrentBetIsSet_WhenLose()
-        {
         }
     }
 }
