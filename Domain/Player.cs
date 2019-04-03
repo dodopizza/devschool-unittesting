@@ -11,8 +11,13 @@ namespace Domain
             this.CurrentGame = game;
         }
 
-        public void Leave(Game game)
+        public void LeaveGame()
         {
+            if (this.CurrentGame is null)
+            {
+                throw new InvalidOperationException("Player already not in game");
+            }
+            
             CurrentGame = null;
         }
     }
