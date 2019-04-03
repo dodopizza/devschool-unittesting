@@ -64,5 +64,35 @@ namespace Domain.Tests
             
             Assert.AreEqual(15, player.GetBetAmount(3));
         }
+
+        [Test]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(15)]
+        [TestCase(35)]
+        [TestCase(90)]
+        public void PlayerCanBetMultipleOf5(int count)
+        {
+            var player = Create.Player()
+                .WithChips(count)
+                .Please();
+
+            player.Bet(count, 1);
+        }
+        
+        [Test]
+        [TestCase(3)]
+        [TestCase(16)]
+        [TestCase(19)]
+        [TestCase(53)]
+        [TestCase(69)]
+        public void PlayerCantBetMultipleOf5(int count)
+        {
+            var player = Create.Player()
+                .WithChips(count)
+                .Please();
+
+            Assert.Throws<InvalidOperationException>(() => player.Bet(count, 1));
+        }
     }
 }

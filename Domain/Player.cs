@@ -44,6 +44,11 @@ namespace Domain
 
         public void Bet(int chipCount, int score)
         {
+            if (chipCount % 5 != 0)
+            {
+                throw new InvalidOperationException("Can only bet multiple of 5");
+            }
+
             if (chipCount > this.Chips)
             {
                 throw new InvalidOperationException("Not enough chips for bet");
