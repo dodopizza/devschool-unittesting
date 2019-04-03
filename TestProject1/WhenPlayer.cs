@@ -20,9 +20,7 @@ namespace TestProject1
         [Fact]
         public void IsInGame_ItCanNotStartsGameAgain()
         {
-            var player = Player.InGame();
-
-            player.Join(Game.WithRandomLuckyScore());
+            var player = Player.New().InGame();
 
             Assert.Throws<InvalidOperationException>(
                 () => player.Join(Game.WithRandomLuckyScore())
@@ -32,7 +30,7 @@ namespace TestProject1
         [Fact]
         public void EndsGame_ItIsNoMoreInGame()
         {
-            var player = Player.InGame();
+            var player = Player.New().InGame();
 
             player.LeaveGame();
 
@@ -73,11 +71,8 @@ namespace TestProject1
         [Fact]
         public void Wins_ItGetsChips()
         {
-            var player = Player.New().MakeBet(1, 1)
-            var game = GetMockedGame(1);
-            player.Join(game);
-            var bet = new Bet(new Chip(1), 1);
-            player.Bet(bet);
+            var game = Game.WithLuckyScore(1);
+            var player = Player.New().MakeBet(1, 1).InGame(game);
 
             game.Play();
 
@@ -87,11 +82,8 @@ namespace TestProject1
         [Fact]
         public void Looses_ItGetsNothing()
         {
-            var player = new Player();
-            var game = GetMockedGame(1);
-            player.Join(game);
-            var bet = new Bet(new Chip(1), 2);
-            player.Bet(bet);
+            var game = Game.WithLuckyScore(1);
+            var player = Player.New().MakeBet(1, 2).InGame(game);
 
             game.Play();
 
@@ -101,14 +93,10 @@ namespace TestProject1
         [Fact]
         public void Plays_GetScoreGetsCalledOnce()
         {
-            var player = new Player();
             var scoreSource = new Mock<IScoreSource>();
             scoreSource.Setup(source => source.GetScore()).Returns(1);
             var game = new RollDiceGame(scoreSource.Object);
-            player.Join(game);
-
-            var bet = new Bet(new Chip(1), 1);
-            player.Bet(bet);
+            Player.New().MakeBet(1, 1).InGame(game);
 
             game.Play();
 
@@ -119,9 +107,8 @@ namespace TestProject1
         public void Wins_WinGetsCalledOnce()
         {
             var player = new Mock<IPlayer>();
-            var game = GetMockedGame(1);
-            game.AddPlayer(player.Object);
-            player.Setup(_ => _.CurrentBet).Returns(new Bet(new Chip(10), 1));
+            var game = Game.WithLuckyScore(1).JoinPlayer(player.Object);
+            player.Setup(_ => _.CurrentBet).Returns(Bet.New(10, 1));
 
             game.Play();
 
@@ -132,9 +119,8 @@ namespace TestProject1
         public void Loses_LoseGetsCalledOnce()
         {
             var player = new Mock<IPlayer>();
-            var game = GetMockedGame(1);
-            game.AddPlayer(player.Object);
-            player.Setup(_ => _.CurrentBet).Returns(new Bet(new Chip(1), 2));
+            var game = Game.WithLuckyScore(1).JoinPlayer(player.Object);
+            player.Setup(_ => _.CurrentBet).Returns(Bet.New(1, 2));
 
             game.Play();
 

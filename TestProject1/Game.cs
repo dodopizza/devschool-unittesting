@@ -18,9 +18,9 @@ namespace TestProject1
             return new RollDiceGame(new RandomScoreSource());
         }
 
-        public static RollDiceGame WithPlayer(this RollDiceGame game)
+        public static RollDiceGame JoinPlayer(this RollDiceGame game, IPlayer player = null)
         {
-            game.AddPlayer(new Domain.Player());
+            game.AddPlayer(player ?? new Domain.Player());
             return game;
         }
     }

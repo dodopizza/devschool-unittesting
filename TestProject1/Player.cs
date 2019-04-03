@@ -4,11 +4,10 @@ namespace TestProject1
 {
     public static class Player
     {
-        public static IPlayer InGame(this IPlayer, RollDiceGame game = null)
+        public static IPlayer InGame(this IPlayer player, RollDiceGame game = null)
         {
-            var player = new Domain.Player();
-            var game = Game.WithLuckyScore(1);
-            player.Join(game);
+            var gameLocal = game ?? Game.WithRandomLuckyScore();
+            player.Join(gameLocal);
             return player;
         }
 
