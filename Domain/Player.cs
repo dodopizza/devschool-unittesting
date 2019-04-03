@@ -8,5 +8,10 @@ namespace Domain
         }
 
         public Game CurrentGame { get; private set; }
+
+        public void LeaveCurrentGame()
+        {
+            CurrentGame = null;
+        }
     }
 }
