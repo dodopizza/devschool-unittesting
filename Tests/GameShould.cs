@@ -1,13 +1,13 @@
-using System;
 using Xunit;
 
 namespace Tests
 {
-    public class UnitTest1
+    public class GameShould
     {
         [Fact]
-        public void Test1()
+        public void NotAllowMoreThan6Players()
         {
+
         }
     }
 }
