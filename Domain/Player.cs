@@ -14,6 +14,7 @@ namespace Domain
         }
 
         public Game CurrentGame { get; private set; }
+        public int CurrentChipsAmount { get; set; }
 
         public void LeaveCurrentGame()
         {
@@ -22,6 +23,11 @@ namespace Domain
 
             CurrentGame.RemovePlayer();
             CurrentGame = null;
+        }
+
+        public void BuyChips(int amount)
+        {
+            CurrentChipsAmount = amount;
         }
     }
 }
