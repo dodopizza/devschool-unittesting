@@ -6,6 +6,9 @@ namespace Domain
     {
         public void Join(Game game)
         {
+            if (CurrentGame != null)
+                throw new InvalidOperationException();
+
             CurrentGame = game;
         }
 
