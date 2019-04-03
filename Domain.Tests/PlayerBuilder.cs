@@ -12,11 +12,17 @@ namespace Domain.Tests
                     result.Join(Game);
                 }
 
+                if (Amount > 0)
+                {
+                    result.Buy(Amount);
+                }
+
                 return result;
             }
         }
         
         private Game Game { get; set; }
+        private int Amount { get; set; }
 
         public PlayerBuilder InGame(Game game)
         {
@@ -27,6 +33,12 @@ namespace Domain.Tests
         public PlayerBuilder InGame()
         {
             Game = new Game();
+            return this;
+        }
+
+        public PlayerBuilder WithChips(int amount)
+        {
+            Amount = amount;
             return this;
         }
     }
