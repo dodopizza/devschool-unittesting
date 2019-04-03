@@ -1,4 +1,5 @@
 using System;
+using JoyCasino.Domain;
 using Xunit;
 
 namespace JoyCasino.Tests
@@ -14,20 +15,6 @@ namespace JoyCasino.Tests
             player.JoinGame(game);
             
             Assert.True(player.IsInGame);
-        }
-    }
-
-    public class Game
-    {
-    }
-
-    public class Player
-    {
-        public bool IsInGame { get; set; }
-
-        public void JoinGame(Game game)
-        {
-            IsInGame = true;
         }
     }
 }
