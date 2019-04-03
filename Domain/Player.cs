@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -7,7 +8,7 @@ namespace Domain
         public Game CurrentGame { get; private set; }
         
         public int Chips { get; private set; }
-        public Bet CurrentBet { get; set; }
+        public List<Bet> CurrentBets { get; } = new List<Bet>();
 
         public void Join(Game game)
         {
@@ -42,7 +43,7 @@ namespace Domain
             }
             
             this.Chips -= chipCount;
-            this.CurrentBet = new Bet(chipCount, score);
+            this.CurrentBets.Add(new Bet(chipCount, score));
         }
     }
 }

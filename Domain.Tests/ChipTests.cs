@@ -26,8 +26,9 @@ namespace Domain.Tests
             player.Bet(10, 3);
             
             Assert.AreEqual(0, player.Chips);
-            Assert.AreEqual(10, player.CurrentBet.Amount);
-            Assert.AreEqual(3, player.CurrentBet.Score);
+            Assert.AreEqual(1, player.CurrentBets.Count);
+            Assert.AreEqual(10, player.CurrentBets[0].Amount);
+            Assert.AreEqual(3, player.CurrentBets[0].Score);
         }
 
         [Test]
@@ -38,6 +39,24 @@ namespace Domain.Tests
                 .Please();
 
             Assert.Throws<InvalidOperationException>(() => player.Bet(10 + 1, 3));
+        }
+
+        [Test]
+        public void PlayerCanBetTwice()
+        {
+            var player = Create.Player()
+                .WithChips(15)
+                .Please();
+
+            player.Bet(10, 3);
+            player.Bet(5, 4);
+            
+            Assert.AreEqual(0, player.Chips);
+            Assert.AreEqual(2, player.CurrentBets.Count);
+            Assert.AreEqual(10, player.CurrentBets[0].Amount);
+            Assert.AreEqual(3, player.CurrentBets[0].Score);
+            Assert.AreEqual(5, player.CurrentBets[1].Amount);
+            Assert.AreEqual(4, player.CurrentBets[1].Score);
         }
     }
 }
