@@ -36,5 +36,16 @@ namespace JoyCasino.Tests
 
             Assert.Equal(1, player.ChipsAmount);
         }
+
+        [Fact]
+        public void WhenBet_ThenBetIsRegistered()
+        {
+            var game = Create.Game.Build();
+            var player = Create.Player.InGame(game).Build();
+
+            player.Bet(1);
+            
+            Assert.Equal(1, player.CurrentBet);
+        }
     }
 }

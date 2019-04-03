@@ -5,6 +5,7 @@ namespace JoyCasino.Domain
         public bool IsInGame { get; set; }
         
         public int ChipsAmount { get; set; }
+        public int CurrentBet { get; set; }
 
         public void JoinGame(Game game)
         {
@@ -19,6 +20,11 @@ namespace JoyCasino.Domain
         public void BuyChips(int amount)
         {
             ChipsAmount += amount;
+        }
+
+        public void Bet(int amount)
+        {
+            CurrentBet = amount;
         }
     }
 }
