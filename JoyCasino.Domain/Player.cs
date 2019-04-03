@@ -45,11 +45,17 @@ namespace JoyCasino.Domain
             }
 
             _currentBetsByScore[score] = amount;
+            ChipsAmount -= amount;
         }
 
         public int GetBetForScore(int score)
         {
-            return _currentBetsByScore[score];
+            return _currentBetsByScore.GetValueOrDefault(score);
+        }
+
+        public void Win(int amount)
+        {
+            ChipsAmount += amount;
         }
     }
 }

@@ -59,14 +59,14 @@ namespace JoyCasino.Tests
         public void WhenBetTwoTimes_ThenTwoBetsRegistered()
         {
             var player = Create.Player.InGame().WithChips(40).Build();
-            
+
             player.Bet(10, 1);
             player.Bet(20, 2);
-            
+
             Assert.Equal(10, player.GetBetForScore(1));
             Assert.Equal(20, player.GetBetForScore(2));
         }
-        
+
         [Fact]
         public void WhenMakeWrongBet_ThenLose()
         {
@@ -78,8 +78,23 @@ namespace JoyCasino.Tests
                 .Build();
 
             game.Play(2);
-            
+
             Assert.True(player.IsLoser);
+        }
+
+        [Fact]
+        public void WhenWins_ThenWinsSixTimesChips()
+        {
+            var game = Create.Game.Build();
+            var player = Create.Player
+                .InGame(game)
+                .WithChips(100)
+                .WithBet(10, 1)
+                .Build();
+
+            game.Play(1);
+            
+            Assert.Equal(90 + 6 * 10, player.ChipsAmount);
         }
     }
 }
