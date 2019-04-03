@@ -20,6 +20,7 @@ namespace Domain.Tests
             game.Play();
             
             Assert.AreEqual(0, player.Chips);
+            Assert.AreEqual(0, player.GetBetAmount(UnluckyScore));
         }
         
         [Test]
@@ -33,6 +34,12 @@ namespace Domain.Tests
             game.Play();
             
             Assert.AreEqual(6 * 10, player.Chips);
+        }
+
+        [Test]
+        public void DealerShouldGetBet_WhenPlayerLose()
+        {
+            
         }
     }
 }
