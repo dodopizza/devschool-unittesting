@@ -40,8 +40,7 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenBet_ThenBetIsRegistered()
         {
-            var game = Create.Game.Build();
-            var player = Create.Player.InGame(game).Build();
+            var player = Create.Player.InGame().Build();
 
             player.Bet(1);
             

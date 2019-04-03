@@ -6,9 +6,9 @@ namespace JoyCasino.Tests.Dsl
     {
         private Game _game;
 
-        public PlayerBuilder InGame(Game game)
+        public PlayerBuilder InGame(Game game = default)
         {
-            _game = game;
+            _game = game ?? new Game();
 
             return this;
         }
