@@ -17,11 +17,17 @@ namespace Domain.Tests
                     result.Buy(Amount);
                 }
 
+                if (Bet != null)
+                {
+                    result.Bet(Bet.Amount, Bet.Score);
+                }
+
                 return result;
             }
         }
         
         private Game Game { get; set; }
+        private Bet Bet { get; set; }
         private int Amount { get; set; }
 
         public PlayerBuilder InGame(Game game)
@@ -39,6 +45,12 @@ namespace Domain.Tests
         public PlayerBuilder WithChips(int amount)
         {
             Amount = amount;
+            return this;
+        }
+
+        public PlayerBuilder WithBetAtScoreAndAmount(int score, int amount)
+        {
+            Bet = new Bet(score, amount);
             return this;
         }
     }

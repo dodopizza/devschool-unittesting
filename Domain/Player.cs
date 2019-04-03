@@ -49,6 +49,23 @@ namespace Domain
             
             Amount -= amount;
         }
+
+        public void Loose()
+        {
+            _currentBets.Clear();
+        }
+
+        public void Win()
+        {
+            Amount += CurrentBetAmount * 6;
+        }
+
+        public void Play(int score)
+        {
+            Amount += CurrentBets.Where(x => x.Score == score).Sum(x => x.Amount) * 6;
+            
+            _currentBets.Clear();
+        }
     }
 
     public class Bet
