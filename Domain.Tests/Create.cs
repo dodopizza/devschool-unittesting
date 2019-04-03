@@ -6,14 +6,4 @@ namespace Domain.Tests
 
         public static GameBuilder Game => new GameBuilder();
     }
-
-    public class PlayerBuilder
-    {
-        public Player Please => new Player();
-    }
-
-    public class GameBuilder
-    {
-        public Game Please => new Game();
-    }
 }
