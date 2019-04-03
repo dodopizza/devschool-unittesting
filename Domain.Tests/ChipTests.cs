@@ -71,13 +71,13 @@ namespace Domain.Tests
         [TestCase(15)]
         [TestCase(35)]
         [TestCase(90)]
-        public void PlayerCanBetMultipleOf5(int count)
+        public void PlayerCanBetMultipleOf5(int betCount)
         {
             var player = Create.Player()
-                .WithChips(count)
+                .WithChips(betCount)
                 .Please();
 
-            player.Bet(count, 1);
+            player.Bet(betCount, 1);
         }
         
         [Test]
@@ -86,13 +86,13 @@ namespace Domain.Tests
         [TestCase(19)]
         [TestCase(53)]
         [TestCase(69)]
-        public void PlayerCantBetMultipleOf5(int count)
+        public void PlayerCantBetMultipleOf5(int betCount)
         {
             var player = Create.Player()
-                .WithChips(count)
+                .WithChips(betCount)
                 .Please();
 
-            Assert.Throws<InvalidOperationException>(() => player.Bet(count, 1));
+            Assert.Throws<InvalidOperationException>(() => player.Bet(betCount, 1));
         }
     }
 }
