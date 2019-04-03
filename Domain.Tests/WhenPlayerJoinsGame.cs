@@ -6,7 +6,7 @@ namespace Domain.Tests
     public class WhenPlayerJoinsGame
     {
         [Fact]
-        public void ThenPlayerInGame()
+        public void AndPlayerNotInGameThenPlayerInGame()
         {
             var player = Create.Player.Please;
             var game = Create.Game.Please;
@@ -14,6 +14,15 @@ namespace Domain.Tests
             player.Join(game);
             
             Assert.True(player.InGame);
+        }   
+        
+        [Fact]
+        public void AndPlayerInGameThenPlayerCantJoin()
+        {
+            var game = Create.Game.Please;
+            var player = Create.Player.InGame().Please;
+
+            Assert.Throws<InvalidOperationException>(() => player.Join(game));
         }
     }
 
