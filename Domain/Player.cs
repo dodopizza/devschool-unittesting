@@ -10,7 +10,7 @@ namespace Domain
                 throw new InvalidOperationException();
 
             CurrentGame = game;
-            game.AddPlayer();
+            game.AddPlayer(this);
         }
 
         public Game CurrentGame { get; private set; }
@@ -21,13 +21,18 @@ namespace Domain
             if (CurrentGame == null)
                 throw new InvalidOperationException();
 
-            CurrentGame.RemovePlayer();
+            CurrentGame.RemovePlayer(this);
             CurrentGame = null;
         }
 
         public void BuyChips(int amount)
         {
             CurrentChipsAmount += amount;
+        }
+
+        public void Bet(int amount)
+        {
+            CurrentGame.Bet(this, amount);
         }
     }
 }

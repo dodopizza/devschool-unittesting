@@ -1,22 +1,29 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
     public class Game
     {
-        private int _numberOfPlayers = 0;
+        private readonly Dictionary<Player, int> _betByPlayer = new Dictionary<Player, int>();
+        public IReadOnlyDictionary<Player, int> BetByPlayer => _betByPlayer;
 
-        public void AddPlayer()
+        public void AddPlayer(Player player)
         {
-            if (_numberOfPlayers >= 6)
+            if (_betByPlayer.Count >= 6)
                 throw new InvalidOperationException();
 
-            _numberOfPlayers++;
+            _betByPlayer[player] = 0;
         }
         
-        public void RemovePlayer()
+        public void RemovePlayer(Player player)
         {
-            _numberOfPlayers--;
+            _betByPlayer.Remove(player);
+        }
+
+        public void Bet(Player player, int amount)
+        {
+            _betByPlayer[player] += amount;
         }
     }
 }
