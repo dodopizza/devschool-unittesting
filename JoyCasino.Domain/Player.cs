@@ -5,11 +5,10 @@ namespace JoyCasino.Domain
 {
     public class Player
     {
-        public bool IsInGame { get; set; }
-        
-        public int ChipsAmount { get; set; }
-        public int CurrentBet { get; set; }
         private readonly Dictionary<int, int> _currentBetsByScore;
+
+        public bool IsInGame { get; private set; }
+        public int ChipsAmount { get; private set; }
 
         public Player()
         {
@@ -31,15 +30,14 @@ namespace JoyCasino.Domain
             ChipsAmount += amount;
         }
 
-        public void Bet(int amount, int score = default)
+        public void Bet(int amount, int score)
         {
             if (amount > ChipsAmount)
             {
                 throw new InvalidOperationException();
             }
-                
+
             _currentBetsByScore[score] = amount;
-            CurrentBet = amount;
         }
 
         public int GetBetForScore(int score)

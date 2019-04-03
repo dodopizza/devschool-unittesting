@@ -1,5 +1,4 @@
 using System;
-using JoyCasino.Domain;
 using Xunit;
 
 namespace JoyCasino.Tests
@@ -41,19 +40,19 @@ namespace JoyCasino.Tests
         [Fact]
         public void WhenBet_ThenBetIsRegistered()
         {
-            var player = Create.Player.WithChips(1).InGame().Build();
+            var player = Create.Player.WithChips(10).InGame().Build();
 
-            player.Bet(1, 1);
+            player.Bet(10, 1);
 
-            Assert.Equal(1, player.CurrentBet);
+            Assert.Equal(10, player.GetBetForScore(1));
         }
 
         [Fact]
         public void WhenBetMoreThanBought_ThenFail()
         {
-            var player = Create.Player.WithChips(1).Build();
+            var player = Create.Player.WithChips(10).Build();
 
-            Assert.Throws<InvalidOperationException>(() => player.Bet(2));
+            Assert.Throws<InvalidOperationException>(() => player.Bet(20, 1));
         }
 
         [Fact]
