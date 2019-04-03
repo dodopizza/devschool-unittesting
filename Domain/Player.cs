@@ -8,6 +8,11 @@ namespace Domain
         
         public void Join(Game game)
         {
+            if (this.CurrentGame != null)
+            {
+                throw new InvalidOperationException("Player already in game");
+            }
+
             this.CurrentGame = game;
         }
 
@@ -18,7 +23,7 @@ namespace Domain
                 throw new InvalidOperationException("Player already not in game");
             }
             
-            CurrentGame = null;
+            this.CurrentGame = null;
         }
     }
 }
