@@ -25,10 +25,7 @@ namespace Domain.Tests
 
             player.Bet(10, 3);
             
-            Assert.AreEqual(0, player.Chips);
-            Assert.AreEqual(1, player.CurrentBets.Count);
-            Assert.AreEqual(10, player.CurrentBets[0].Amount);
-            Assert.AreEqual(3, player.CurrentBets[0].Score);
+            Assert.AreEqual(10, player.GetBetAmount(3));
         }
 
         [Test]
@@ -50,13 +47,22 @@ namespace Domain.Tests
 
             player.Bet(10, 3);
             player.Bet(5, 4);
+
+            Assert.AreEqual(10, player.GetBetAmount(3));
+            Assert.AreEqual(5, player.GetBetAmount(4));
+        }
+
+        [Test]
+        public void PlayerCanRaiseBet()
+        {
+            var player = Create.Player()
+                .WithChips(15)
+                .Please();
             
-            Assert.AreEqual(0, player.Chips);
-            Assert.AreEqual(2, player.CurrentBets.Count);
-            Assert.AreEqual(10, player.CurrentBets[0].Amount);
-            Assert.AreEqual(3, player.CurrentBets[0].Score);
-            Assert.AreEqual(5, player.CurrentBets[1].Amount);
-            Assert.AreEqual(4, player.CurrentBets[1].Score);
+            player.Bet(10, 3);
+            player.Bet(5, 3);
+            
+            Assert.AreEqual(15, player.GetBetAmount(3));
         }
     }
 }

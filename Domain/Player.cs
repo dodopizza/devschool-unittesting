@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain
 {
     public class Player
     {
         public Game CurrentGame { get; private set; }
-        
+
         public int Chips { get; private set; }
-        public List<Bet> CurrentBets { get; } = new List<Bet>();
+        private readonly List<Bet> _currentBets = new List<Bet>();
+
+        public int GetBetAmount(int score)
+        {
+            var amount = _currentBets.Where(b => b.Score == score).Sum(b => b.Amount);
+            return amount;
+        }    
 
         public void Join(Game game)
         {
@@ -43,7 +50,7 @@ namespace Domain
             }
             
             this.Chips -= chipCount;
-            this.CurrentBets.Add(new Bet(chipCount, score));
+            this._currentBets.Add(new Bet(chipCount, score));
         }
     }
 }
