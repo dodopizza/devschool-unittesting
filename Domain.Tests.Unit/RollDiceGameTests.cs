@@ -1,3 +1,4 @@
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -98,11 +99,7 @@ namespace Domain.Tests
         {
             var game = Create.Game()
                 .WithANumberOfPlayers(3)
-                .WithPlayerBets(
-                    Create.Bet().On(4).Please(),
-                    Create.Bet().On(4).Please(),
-                    Create.Bet().On(5).Please()
-                )
+                .WithPlayerBetsOn(4, 5, 6)
                 .WithLuckyRoll(5)
                 .Please();
 
@@ -167,6 +164,12 @@ namespace Domain.Tests
             public GameBuilder WithPlayerBets(params Bet[] bets)
             {
                 _bets = bets;
+                return this;
+            }
+
+            public GameBuilder WithPlayerBetsOn(params int[] scores)
+            {
+                _bets = scores.Select(s => Create.Bet().On(s).Please()).ToArray();
                 return this;
             }
 
