@@ -37,6 +37,8 @@ namespace Domain
 
         public void Bet(int amount)
         {
+            if (amount > Amount) throw new InvalidOperationException();
+            
             CurrentBet = amount;
             Amount -= amount;
         }

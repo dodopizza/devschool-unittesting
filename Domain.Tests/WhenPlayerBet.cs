@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace Domain.Tests
@@ -7,7 +8,7 @@ namespace Domain.Tests
         [Fact]
         public void AndBetWithAmount5ThenPlayerHasBetWithAmount5()
         {
-            var player = Create.Player.Please;
+            var player = Create.Player.WithChips(5).Please;
             
             player.Bet(5);
             
@@ -17,7 +18,7 @@ namespace Domain.Tests
         [Fact]
         public void AndBetWithAmount15ThenPlayerHasBetWithAmount15()
         {
-            var player = Create.Player.Please;
+            var player = Create.Player.WithChips(15).Please;
             
             player.Bet(15);
             
@@ -32,6 +33,14 @@ namespace Domain.Tests
             player.Bet(5);
             
             Assert.Equal(10, player.Amount);
+        }
+        
+        [Fact] 
+        public void AndPlayerHas5ChipsAndBets10ThenPlayerCantBet()
+        {
+            var player = Create.Player.WithChips(5).Please;
+
+            Assert.Throws<InvalidOperationException>(() => player.Bet(10));
         }
     }
 }
