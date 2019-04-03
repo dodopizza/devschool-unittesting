@@ -7,6 +7,7 @@ namespace Domain
         public Game CurrentGame { get; private set; }
         
         public int Chips { get; private set; }
+        public Bet CurrentBet { get; set; }
 
         public void Join(Game game)
         {
@@ -31,6 +32,12 @@ namespace Domain
         public void BuyChips(int chipsCount)
         {
             this.Chips += chipsCount;
+        }
+
+        public void Bet(int chipCount, int score)
+        {
+            this.Chips -= chipCount;
+            this.CurrentBet = new Bet(chipCount, score);
         }
     }
 }

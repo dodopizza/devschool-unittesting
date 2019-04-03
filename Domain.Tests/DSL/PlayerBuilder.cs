@@ -3,6 +3,7 @@ namespace Domain.Tests.DSL
     public class PlayerBuilder
     {
         private Game _game;
+        private int _chips;
 
         public Player Please()
         {
@@ -11,6 +12,8 @@ namespace Domain.Tests.DSL
             {
                 player.Join(_game);
             }
+            
+            player.BuyChips(_chips);
 
             return player;
         }
@@ -18,6 +21,12 @@ namespace Domain.Tests.DSL
         public PlayerBuilder In(Game game)
         {
             _game = game;
+            return this;
+        }
+
+        public PlayerBuilder WithChips(int chips)
+        {
+            _chips = chips;
             return this;
         }
     }
