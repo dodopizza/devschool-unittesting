@@ -53,7 +53,7 @@ namespace Domain
             CurrentBet = null;
         }
 
-        public void Lose()
+        public void Loose()
         {
             CurrentBet = null;
         }

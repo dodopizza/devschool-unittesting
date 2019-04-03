@@ -18,6 +18,6 @@ namespace Domain
 
         void Win(int chipsAmount);
 
-        void Lose();
+        void Loose();
     }
 }

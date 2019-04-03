@@ -38,7 +38,7 @@ namespace Domain
                 }
                 else
                 {
-                    player.Lose();
+                    player.Loose();
                 }
             }
         }
